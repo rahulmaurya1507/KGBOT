@@ -1,0 +1,297 @@
+# ---
+# "Named Things"
+# ---
+human gene:
+  is_a: gene
+  represented_as: node
+  preferred_id: ensembl
+  label_in_input: ensembl
+  properties:
+    approvedSymbol: str
+    approvedName: str
+    biotype: str
+
+mouse gene:
+  is_a: gene
+  represented_as: node
+  preferred_id: ensembl
+  label_in_input: mouse gene
+  properties:
+    targetInModel: str
+    targetInModelMgiId: str
+    targetFromSourceId: str
+
+# otar has no Bioregistry entry
+disease:
+  represented_as: node
+  preferred_id: [mondo, efo, hp, orphanet, otar, oba, ncit, doid, obi, ogms]
+  label_in_input: [mondo, efo, hp, orphanet, otar, oba, ncit, doid, obi, ogms]
+  properties:
+    code: str
+    name: str
+    description: str
+    ontology: str
+
+go term:
+  is_a: biological entity # activity, process, or location
+  represented_as: node
+  preferred_id: go
+  label_in_input: go
+  properties:
+    name: str
+
+mouse phenotype:
+  is_a: phenotypic feature
+  represented_as: node
+  preferred_id: mp
+  label_in_input: mp
+  properties:
+    modelPhenotypeLabel: str
+    targetFromSourceId: str
+    targetInModelEnsemblId: str
+
+#Additional schema added here
+# Human Phenotype Ontology addition
+human phenotype ontology:
+  is_a: phenotypic feature
+  represented_as: node
+  preferred_id: [bfo, chebi, cl, go, hp]
+  label_in_input: [bfo, chebi, cl, go, hp]
+  properties:
+    dbXRefs: str[]
+    description: str
+    name: str
+    namespace: str
+    obsolete_terms: str[]
+    parents: str[]
+
+# Target - baseline expression
+target baseline expression:
+  is_a: biological entity
+  represented_as: node
+  preferred_id: ensembl
+  label_in_input: target baseline expression
+  properties:
+    id: str
+    tissues:
+      - efo_code: str
+        label: str
+        organs: str[]
+        anatomical_systems: str[]
+        rna:
+          - value: double
+            zscore: int
+            level: int
+            unit: str
+        protein:
+          - reliability: bool
+            level: int
+            cell_type:
+              - name: str
+                reliability: bool
+                level: int
+
+
+# "Drug - Indications"
+# ---
+drug indications:
+  is_a: drug
+  represented_as: node
+  preferred_id: chembl
+  label_in_input: drug indications
+  properties:
+    id: str
+    name: str
+    description: str
+    indications:
+      - disease: str
+        efoName: str
+        references:
+          - source: string
+            ids:
+              - element: string
+# approvedIndications:
+#   - element: string
+# indicationCount: integer
+# maxPhaseForIndication: double
+
+
+# mechanism of action:
+#   is_a: drug
+#   represented_as: node
+#   preferred_id: chembl
+#   label_in_input: chembl
+#   properties:
+#     actionType: str
+#     mechanismOfAction: str
+
+
+# #drug pharmacovigilance:
+# drug pharmacovigilance:
+#   is_a: drug
+#   represented_as: node
+#   preferred_id: chembl
+#   label_in_input: chembl
+#   properties:
+#     chembl_id: str
+#     event: str
+
+
+
+# # -----------------------------------------------------------------------------------------------------------
+# # Associations
+# # -----------------------------------------------------------------------------------------------------------
+gene to disease association:
+  represented_as: node
+  preferred_id: [
+    affected pathway, 
+    somatic mutation, 
+    genetic association, 
+    literature,
+    animal model,
+    known drug,
+    rna expression,
+  ]
+  label_in_input: [
+    affected_pathway, 
+    somatic_mutation, 
+    genetic_association,
+    literature,
+    animal_model,
+    known_drug,
+    rna_expression,
+  ]
+  properties:
+    literature: str[]
+    score: double
+
+
+# drug to gene association:
+#   represented_as: node
+#   preferred_id: [
+#     affected pathway, 
+#     somatic mutation, 
+#     genetic association, 
+#     literature,
+#     animal model,
+#     known drug,
+#     rna expression,
+#   ]
+#   label_in_input: [
+#     affected_pathway, 
+#     somatic_mutation, 
+#     genetic_association,
+#     literature,
+#     animal_model,
+#     known_drug,
+#     rna_expression,
+#   ]
+#   properties:
+#     literature: str[]
+#     score: double
+
+
+# gene to phenotypic feature association:
+#   represented_as: node
+#   preferred_id: [
+#     affected pathway, 
+#     somatic mutation, 
+#     genetic association, 
+#     literature,
+#     animal model,
+#     known drug,
+#     rna expression,
+#   ]
+#   label_in_input: [
+#     affected_pathway, 
+#     somatic_mutation, 
+#     genetic_association,
+#     literature,
+#     animal_model,
+#     known_drug,
+#     rna_expression,
+#   ]
+#   properties:
+#     literature: str[]
+#     score: double
+
+
+# # ---
+# # "Named Things"
+# # ---
+# human gene:
+#   is_a: gene
+#   represented_as: node
+#   preferred_id: ensembl
+#   label_in_input: ensembl
+#   properties:
+#     approvedSymbol: str
+#     approvedName: str
+#     biotype: str
+
+# mouse gene:
+#   is_a: gene
+#   represented_as: node
+#   preferred_id: ensembl
+#   label_in_input: mouse gene
+#   properties:
+#     targetInModel: str
+#     targetInModelMgiId: str
+#     targetFromSourceId: str
+
+# # otar has no Bioregistry entry
+# disease:
+#   represented_as: node
+#   preferred_id: [mondo, efo, hp, orphanet, otar, oba, ncit, doid, obi, ogms]
+#   label_in_input: [mondo, efo, hp, orphanet, otar, oba, ncit, doid, obi, ogms]
+#   properties:
+#     code: str
+#     name: str
+#     description: str
+#     ontology: str
+
+# go term:
+#   is_a: biological entity # activity, process, or location
+#   represented_as: node
+#   preferred_id: go
+#   label_in_input: go
+#   properties:
+#     name: str
+
+# mouse phenotype:
+#   is_a: phenotypic feature
+#   represented_as: node
+#   preferred_id: mp
+#   label_in_input: mp
+#   properties:
+#     modelPhenotypeLabel: str
+#     targetFromSourceId: str
+#     targetInModelEnsemblId: str
+
+# # ---
+# # Associations
+# # ---
+
+# gene to disease association:
+#   represented_as: node
+#   preferred_id: [
+#     affected pathway, 
+#     somatic mutation, 
+#     genetic association, 
+#     literature,
+#     animal model,
+#     known drug,
+#     rna expression,
+#   ]
+#   label_in_input: [
+#     affected_pathway, 
+#     somatic_mutation, 
+#     genetic_association,
+#     literature,
+#     animal_model,
+#     known_drug,
+#     rna_expression,
+#   ]
+#   properties:
+#     literature: str[]
+#     score: double

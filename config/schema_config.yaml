@@ -1,0 +1,79 @@
+# ---
+# "Named Things"
+# ---
+human gene:
+  is_a: gene
+  represented_as: node
+  preferred_id: ensembl
+  label_in_input: ensembl
+  properties:
+    approvedSymbol: str
+    approvedName: str
+    name: str
+    biotype: str
+
+
+# otar has no Bioregistry entry
+disease:
+  represented_as: node
+  preferred_id: [mondo, efo, hp, orphanet, otar, oba, ncit, doid, obi, ogms, go, mp]
+  label_in_input: [mondo, efo, hp, orphanet, otar, oba, ncit, doid, obi, ogms, go, mp]
+  properties:
+    code: str
+    name: str
+    description: str
+    ontology: str
+
+
+association by overall direct:
+  is_a: gene to disease association
+  represented_as: edge
+  input_label: abod
+  properties:
+    score: float
+    evidenceCount: int
+
+
+association by overall indirect:
+  is_a: gene to disease association
+  represented_as: edge
+  input_label: aboid
+  properties:
+    score: float
+    evidenceCount: int
+
+association by data source direct:
+  is_a: gene to disease association
+  represented_as: edge
+  preferred_id: associations_dsd
+  input_label: [
+    animal_model.abdsd,
+    affected_pathway.abdsd,
+    genetic_association.abdsd,
+    literature.abdsd,
+    rna_expression.abdsd,
+    somatic_mutation.abdsd,
+    known_drug.abdsd
+]
+  properties:
+    score: float
+    evidenceCount: int
+    datasourceId : str
+
+association by data source indirect:
+  is_a: gene to disease association
+  represented_as: edge
+  preferred_id: associations_dsid
+  input_label: [
+    animal_model.abdsid,
+    affected_pathway.abdsid,
+    genetic_association.abdsid,
+    literature.abdsid,
+    rna_expression.abdsid,
+    somatic_mutation.abdsid,
+    known_drug.abdsid
+]
+  properties:
+    score: float
+    evidenceCount: int
+    datasourceId : str

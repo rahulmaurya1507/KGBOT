@@ -1,0 +1,53 @@
+version: '3.3'
+
+services:
+  build:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: build-ot-db
+    volumes:
+      - ./biocypher_neo4j_volume:/usr/app/data
+      - .:/src/
+    command:
+      - /bin/bash
+      - /src/scripts/build.sh
+
+  import:
+    image: neo4j:4.4-community
+    container_name: import-ot-db
+    environment:
+      NEO4J_AUTH: none
+      NEO4J_ACCEPT_LICENSE_AGREEMENT: "yes"
+      FILL_DB_ON_STARTUP: "yes"
+    volumes:
+      - ./biocypher_neo4j_volume:/data
+      - ./scripts/import.sh:/scripts/import.sh
+    command:
+      - /bin/bash
+      - /scripts/import.sh
+
+    depends_on:
+      build:
+        condition: service_completed_successfully
+
+  deploy:
+    image: neo4j:4.4-community
+    container_name: deploy-ot-db
+    volumes:
+      - ./biocypher_neo4j_volume:/data
+    environment:
+      NEO4J_dbms_security_auth__enabled: "false"
+      NEO4J_dbms_databases_default__to__read__only: "false"
+      NEO4J_ACCEPT_LICENSE_AGREEMENT: "yes"
+      SERVER_DEFAULT_LISTEN_ADDRESS: 0.0.0.0
+      NEO4J_AUTH: neo4j/password
+    ports:
+      - "7476:7474"
+      - "7688:7687"
+    depends_on:
+      import:
+        condition: service_completed_successfully
+
+volumes:
+  biocypher_neo4j_volume:
