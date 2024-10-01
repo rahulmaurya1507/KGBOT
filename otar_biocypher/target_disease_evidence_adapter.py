@@ -15,7 +15,8 @@ class TargetDiseaseEvidenceAdapter:
             datasets: list[TargetDiseaseDataset],
             node_fields: list[TargetNodeField | DiseaseNodeField],
             edge_fields: list[TargetDiseaseEdgeField],
-            test_mode: bool = False
+            test_mode: bool = False,
+            environment: str = "test"
             
     ):
         self.datasets = datasets
@@ -24,7 +25,7 @@ class TargetDiseaseEvidenceAdapter:
         self.test_mode = test_mode
         self.test_size = 10
 
-        self.dl = DataLoader()
+        self.dl = DataLoader(environment)
 
 
         if not self.datasets:

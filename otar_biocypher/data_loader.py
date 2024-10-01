@@ -1,17 +1,27 @@
 import pandas as pd
-
 from biocypher._logger import logger
-
 from pyspark import SparkConf, SparkContext
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col
 
 
 class DataLoader:
-    def __init__(self) -> None:
+    def __init__(self, environment: str) -> None:
+        """
+        Initialize DataLoader with a specific environment.
+        
+        Args:
+            environment (str): The environment for loading data. Can be 'dev' or 'test'.
+        """
+        # Set base path based on environment
+        if environment == "dev":
+            base_path = "data/ot_files"
+        elif environment == "test":
+            base_path = "data/test_data"
+        else:
+            raise ValueError(f"Unknown environment: {environment}")
 
-
-        logger.info("Creating Spark session.")
+        logger.info(f"Creating Spark session for {environment} environment.")
 
         # Set up Spark context
         conf = (
@@ -30,25 +40,24 @@ class DataLoader:
             .getOrCreate()
         )
 
-        target_path = "data/ot_files/targets"
+        # Load the data
+        target_path = f"{base_path}/targets"
         self.target_df = self.spark.read.parquet(target_path)
         self.target_df = self.target_df.withColumn("name", col("approvedSymbol"))
-        
-        disease_path = "data/ot_files/diseases"
+
+        disease_path = f"{base_path}/diseases"
         self.disease_df = self.spark.read.parquet(disease_path)
 
-        abod_path = 'data/ot_files/associationByOverallDirect'
-        # self.abod_df = self.spark.read.parquet(abod_path)
+        abod_path = f"{base_path}/associationByOverallDirect"
         self.abod_df = pd.read_parquet(abod_path)
 
-        aboid_path = 'data/ot_files/associationByOverallIndirect'
-        # self.abod_df = self.spark.read.parquet(abod_path)
+        aboid_path = f"{base_path}/associationByOverallIndirect"
         self.aboid_df = pd.read_parquet(aboid_path)
 
-        abdsd_path = 'data/ot_files/associationByDatasourceDirect'
-        # self.abod_df = self.spark.read.parquet(abod_path)
+        abdsd_path = f"{base_path}/associationByDatasourceDirect"
         self.abdsd_df = pd.read_parquet(abdsd_path)
+        self.abdsd_df['name'] = self.abdsd_df['diseaseId'] + '-' + self.abdsd_df['targetId']
 
-        abdsid_path = 'data/ot_files/associationByDatasourceIndirect'
-        # self.abod_df = self.spark.read.parquet(abod_path)
+        abdsid_path = f"{base_path}/associationByDatasourceIndirect"
         self.abdsid_df = pd.read_parquet(abdsid_path)
+

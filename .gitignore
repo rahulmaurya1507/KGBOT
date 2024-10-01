@@ -6,3 +6,4 @@ biocypher_neo4j_volume/
 view_data.py
 downloads/
 csv/
+copy.sh

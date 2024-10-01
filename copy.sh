@@ -23,7 +23,3 @@ for subdir in "$src_dir"/association*/; do  # Only process directories that star
 done
 
 echo "Copied 2 files from each 'association*' subdirectory to $dest_dir"
-
-
-
-	bin/neo4j-admin import --delimiter="\t" --array-delimiter="|" --quote="'" --force=true --skip-bad-relationships=true --nodes="/home/rahulmaurya/merai/ot-sample/biocypher-out/20240928105645/Efo.Disease-header.csv,/home/rahulmaurya/merai/ot-sample/biocypher-out/20240928105645/Efo.Disease-part.*" --relationships="/home/rahulmaurya/merai/ot-sample/biocypher-out/20240928105645/AssociationByDataSourceDirect-header.csv,/home/rahulmaurya/merai/ot-sample/biocypher-out/20240928105645/AssociationByDataSourceDirect-part.*" --relationships="/home/rahulmaurya/merai/ot-sample/biocypher-out/20240928105645/AssociationByDataSourceIndirect-header.csv,/home/rahulmaurya/merai/ot-sample/biocypher-out/20240928105645/AssociationByDataSourceIndirect-part.*" --database=test 

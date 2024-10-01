@@ -24,7 +24,6 @@ disease:
     description: str
     ontology: str
 
-
 association by overall direct:
   is_a: gene to disease association
   represented_as: edge
@@ -59,11 +58,13 @@ association by data source direct:
     score: float
     evidenceCount: int
     datasourceId : str
+    name: str
 
 association by data source indirect:
   is_a: gene to disease association
   represented_as: edge
   preferred_id: associations_dsid
+  use_id: false
   input_label: [
     animal_model.abdsid,
     affected_pathway.abdsid,

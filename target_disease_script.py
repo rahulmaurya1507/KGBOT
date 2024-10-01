@@ -86,7 +86,7 @@ def main():
         datasets=target_disease_datasets,
         node_fields=target_disease_node_fields,
         edge_fields=target_disease_edge_fields,
-        test_mode=True,
+        test_mode=False,
     )
 
     # Write nodes
@@ -95,7 +95,7 @@ def main():
     # bc.write_edges(target_disease_adapter.get_abod_edges())
     # bc.write_edges(target_disease_adapter.get_aboid_edges())
     bc.write_edges(target_disease_adapter.get_abdsd_edges())
-    bc.write_edges(target_disease_adapter.get_abdsid_edges())
+    # bc.write_edges(target_disease_adapter.get_abdsid_edges())
 
     # # Post import functions
     bc.write_import_call()
