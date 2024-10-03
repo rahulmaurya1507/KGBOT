@@ -58,7 +58,6 @@ association by data source direct:
     score: float
     evidenceCount: int
     datasourceId : str
-    name: str
 
 association by data source indirect:
   is_a: gene to disease association

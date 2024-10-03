@@ -6,7 +6,7 @@ import sys
 
 sys.path.append("")
 
-from otar_biocypher.target_disease_evidence_adapter import (
+from otar_biocypher.ota import (
     TargetDiseaseEvidenceAdapter,
     TargetDiseaseDataset,
     TargetNodeField,
@@ -87,15 +87,16 @@ def main():
         node_fields=target_disease_node_fields,
         edge_fields=target_disease_edge_fields,
         test_mode=False,
+        environment='dev'
     )
 
     # Write nodes
     bc.write_nodes(target_disease_adapter.get_nodes())
 
-    # bc.write_edges(target_disease_adapter.get_abod_edges())
-    # bc.write_edges(target_disease_adapter.get_aboid_edges())
+    bc.write_edges(target_disease_adapter.get_abod_edges())
+    bc.write_edges(target_disease_adapter.get_aboid_edges())
     bc.write_edges(target_disease_adapter.get_abdsd_edges())
-    # bc.write_edges(target_disease_adapter.get_abdsid_edges())
+    bc.write_edges(target_disease_adapter.get_abdsid_edges())
 
     # # Post import functions
     bc.write_import_call()

@@ -56,7 +56,6 @@ class DataLoader:
 
         abdsd_path = f"{base_path}/associationByDatasourceDirect"
         self.abdsd_df = pd.read_parquet(abdsd_path)
-        self.abdsd_df['name'] = self.abdsd_df['diseaseId'] + '-' + self.abdsd_df['targetId']
 
         abdsid_path = f"{base_path}/associationByDatasourceIndirect"
         self.abdsid_df = pd.read_parquet(abdsid_path)
