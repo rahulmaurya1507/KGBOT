@@ -93,10 +93,9 @@ def main():
     # Write nodes
     bc.write_nodes(target_disease_adapter.get_nodes())
 
-    bc.write_edges(target_disease_adapter.get_abod_edges())
     bc.write_edges(target_disease_adapter.get_aboid_edges())
-    bc.write_edges(target_disease_adapter.get_abdsd_edges())
     bc.write_edges(target_disease_adapter.get_abdsid_edges())
+    bc.write_edges(target_disease_adapter.get_abdtid_edges())
 
     # # Post import functions
     bc.write_import_call()

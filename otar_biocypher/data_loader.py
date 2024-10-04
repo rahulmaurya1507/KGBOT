@@ -60,3 +60,5 @@ class DataLoader:
         abdsid_path = f"{base_path}/associationByDatasourceIndirect"
         self.abdsid_df = pd.read_parquet(abdsid_path)
 
+        abdtid_path = f"{base_path}/associationByDatatypeIndirect"
+        self.abdtid_df = pd.read_parquet(abdtid_path)

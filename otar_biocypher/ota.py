@@ -66,3 +66,6 @@ class TargetDiseaseEvidenceAdapter:
 
     def get_abdsid_edges(self):
         return self.edge_generator.get_abdsid_edges()
+
+    def get_abdtid_edges(self):
+        return self.edge_generator.get_abdtid_edges()
