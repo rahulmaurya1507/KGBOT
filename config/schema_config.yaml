@@ -28,6 +28,7 @@ association by overall direct:
   is_a: gene to disease association
   represented_as: edge
   input_label: abod
+  prederred_id: associations_abod
   properties:
     score: float
     evidenceCount: int
@@ -37,6 +38,7 @@ association by overall indirect:
   is_a: gene to disease association
   represented_as: edge
   input_label: aboid
+  prederred_id: associations_aboid
   properties:
     score: float
     evidenceCount: int
@@ -78,6 +80,25 @@ association by data source indirect:
     evidenceCount: int
     datasourceId : str
 
+association by data type direct:
+  is_a: gene to disease association
+  represented_as: edge
+  preferred_id: associations_dtd
+  use_id: false
+  input_label: [
+    animal_model.abdtd,
+    affected_pathway.abdtd,
+    genetic_association.abdtd,
+    literature.abdtd,
+    rna_expression.abdtd,
+    somatic_mutation.abdtd,
+    known_drug.abdtd
+]
+  properties:
+    score: float
+    evidenceCount: int
+    datasourceId : str
+
 
 association by data type indirect:
   is_a: gene to disease association
@@ -91,7 +112,7 @@ association by data type indirect:
     literature.abdtid,
     rna_expression.abdtid,
     somatic_mutation.abdtid,
-    known_drug.abdsid
+    known_drug.abdtid
 ]
   properties:
     score: float

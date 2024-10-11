@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Source directory containing your folders (replace with your actual source directory)
-src_dir="../ot-data"
+src_dir="data/ot_files"
 
 # Destination directory where you want to copy the files (replace with your actual destination directory)
 dest_dir="data/ot_files"

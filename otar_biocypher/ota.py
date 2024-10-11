@@ -49,7 +49,7 @@ class TargetDiseaseEvidenceAdapter:
         # Initialize NodeGenerator
         self.node_generator = NodeGenerator(self.dl.target_df, self.dl.disease_df, self.node_fields, self.test_mode)
 
-        self.edge_generator = EdgeGenerator(self.dl.abod_df, self.dl.aboid_df, self.dl.abdsd_df, self.dl.abdsid_df, self.test_mode)
+        self.edge_generator = EdgeGenerator(self.dl.abod_df, self.dl.aboid_df, self.dl.abdsd_df, self.dl.abdsid_df, self.dl.abdtd_df, self.dl.abdtid_df, self.test_mode)
 
     def get_nodes(self):
         return self.node_generator.get_nodes()
@@ -66,6 +66,9 @@ class TargetDiseaseEvidenceAdapter:
 
     def get_abdsid_edges(self):
         return self.edge_generator.get_abdsid_edges()
+    
+    def get_abdtd_edges(self):
+        return self.edge_generator.get_abdtd_edges()
 
     def get_abdtid_edges(self):
         return self.edge_generator.get_abdtid_edges()
