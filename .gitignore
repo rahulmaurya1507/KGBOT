@@ -5,3 +5,5 @@ data/
 biocypher_neo4j_volume/
 downloads/
 parquet2csv.py
+check_match.py
+data_vis.py
