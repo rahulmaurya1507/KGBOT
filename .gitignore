@@ -4,5 +4,4 @@ biocypher-log/
 data/
 biocypher_neo4j_volume/
 downloads/
-copy.sh
 parquet2csv.py
