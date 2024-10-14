@@ -1,15 +1,19 @@
 import pandas as pd
 
 
-abod = pd.read_parquet('data/ot_files/associationByOverallIndirect/part-00003-c94918cb-23a8-4467-971d-48174b9df6b2-c000.snappy.parquet')
-abod.to_csv('csv/aboid.csv', index=False)
-print(abod.head())
-targets = pd.read_parquet('data/ot_files/targets/part-00000-6dfa6a61-ee3c-4f00-9923-b874aea463d7-c000.snappy.parquet')
+abod = pd.read_parquet('data/ot_files/associationByOverallDirect/')
+print(abod.columns)
+aboid = pd.read_parquet('data/ot_files/associationByOverallIndirect/')
+print(aboid.columns)
 
-abod_target = list(abod[abod['diseaseId'] == "DOID_7551"]['targetId'])
+print(abod.shape, aboid.shape)
+print(len(abod.targetId.unique()), len(aboid.targetId.unique()))
+print(len(abod.diseaseId.unique()), len(aboid.diseaseId.unique()))
 
-target_id = list(targets['id'])
+comparision_abod = pd.concat([abod, aboid, aboid]).drop_duplicates(keep=False)
+print(comparision_abod.shape)
+print(comparision_abod.head())
 
-for at in abod_target:
-    if at in target_id:
-        print(at)
+comparision_aboid = pd.concat([aboid, abod, abod]).drop_duplicates(keep=False)
+print(comparision_aboid.shape)
+print(comparision_aboid.head())
