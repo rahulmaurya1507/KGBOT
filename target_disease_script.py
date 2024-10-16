@@ -79,15 +79,20 @@ def main():
     # Check the schema
     bc.show_ontology_structure()
 
-    # Load data
+    # Set server type
+    test_mode = False
+    if test_mode:
+        environment = "test"
+    else:
+        environment = "dev"
 
     # Open Targets
     target_disease_adapter = TargetDiseaseEvidenceAdapter(
         datasets=target_disease_datasets,
         node_fields=target_disease_node_fields,
         edge_fields=target_disease_edge_fields,
-        test_mode=False,
-        environment='dev'
+        test_mode=test_mode,
+        environment=environment
     )
 
     # Write nodes
