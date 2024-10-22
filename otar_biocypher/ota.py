@@ -16,17 +16,17 @@ class TargetDiseaseEvidenceAdapter:
             node_fields: list[TargetNodeField | DiseaseNodeField],
             edge_fields: list[TargetDiseaseEdgeField],
             test_mode: bool = False,
-            environment: str = "test"
+            environment: str = "test",
+            test_size: int = None
             
     ):
         self.datasets = datasets
         self.node_fields = node_fields
         self.edge_fields = edge_fields
         self.test_mode = test_mode
-        self.test_size = 10
+        self.test_size = test_size
 
-        self.dl = DataLoader(environment)
-
+        self.dl = DataLoader(environment, test_size=self.test_size)
 
         if not self.datasets:
             raise ValueError("datasets must be provided")
@@ -47,28 +47,28 @@ class TargetDiseaseEvidenceAdapter:
             logger.warning("Open Targets adapter: Test mode is enabled. Only processing {self.test_size} rows.")
 
         # Initialize NodeGenerator
-        self.node_generator = NodeGenerator(self.dl.target_df, self.dl.disease_df, self.node_fields, self.test_mode)
+        self.node_generator = NodeGenerator(self.dl.target_df, self.dl.disease_df, self.node_fields)
 
-        self.edge_generator = EdgeGenerator(self.dl.abod_df, self.dl.aboid_df, self.dl.abdsd_df, self.dl.abdsid_df, self.dl.abdtd_df, self.dl.abdtid_df, self.test_mode)
+        self.edge_generator = EdgeGenerator(self.dl.abo_df, self.dl.abodid_df, self.dl.abds_df, self.dl.abdsdid_df, self.dl.abdt_df, self.dl.abdtdid_df)
 
     def get_nodes(self):
         return self.node_generator.get_nodes()
 
     # Edge methods would remain as they were, using the EdgeGenerator
-    def get_abod_edges(self):
-        return self.edge_generator.get_abod_edges()
+    def get_abo_edges(self):
+        return self.edge_generator.get_abo_edges()
 
-    def get_aboid_edges(self):
-        return self.edge_generator.get_aboid_edges()
+    def get_abodid_edges(self):
+        return self.edge_generator.get_abodid_edges()
 
-    def get_abdsd_edges(self):
-        return self.edge_generator.get_abdsd_edges()
+    def get_abds_edges(self):
+        return self.edge_generator.get_abds_edges()
 
-    def get_abdsid_edges(self):
-        return self.edge_generator.get_abdsid_edges()
+    def get_abdsdid_edges(self):
+        return self.edge_generator.get_abdsdid_edges()
     
-    def get_abdtd_edges(self):
-        return self.edge_generator.get_abdtd_edges()
+    def get_abdt_edges(self):
+        return self.edge_generator.get_abdt_edges()
 
-    def get_abdtid_edges(self):
-        return self.edge_generator.get_abdtid_edges()
+    def get_abdtdid_edges(self):
+        return self.edge_generator.get_abdtdid_edges()

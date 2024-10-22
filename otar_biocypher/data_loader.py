@@ -6,18 +6,20 @@ from pyspark.sql.functions import col
 
 
 class DataLoader:
-    def __init__(self, environment: str) -> None:
+    def __init__(self, environment: str, test_size: int = None) -> None:
         """
         Initialize DataLoader with a specific environment.
         
         Args:
             environment (str): The environment for loading data. Can be 'dev' or 'test'.
         """
+        self.test_size = test_size
+
         # Set base path based on environment
         if environment == "dev":
-            base_path = "data/ot_files"
+            self.base_path = "data/pot_files"
         elif environment == "test":
-            base_path = "data/test_data"
+            self.base_path = "data/test_data"
         else:
             raise ValueError(f"Unknown environment: {environment}")
 
@@ -41,27 +43,40 @@ class DataLoader:
         )
 
         # Load the data
-        target_path = f"{base_path}/targets"
+        target_path = f"{self.base_path}/targets"
         self.target_df = self.spark.read.parquet(target_path)
         self.target_df = self.target_df.withColumn("name", col("approvedSymbol"))
 
-        disease_path = f"{base_path}/diseases"
+        disease_path = f"{self.base_path}/diseases"
         self.disease_df = self.spark.read.parquet(disease_path)
 
-        abod_path = f"{base_path}/associationByOverallDirect"
-        self.abod_df = pd.read_parquet(abod_path)
+        abo_path = f"{self.base_path}/abo"
+        self.abo_df = pd.read_parquet(abo_path)
 
-        aboid_path = f"{base_path}/associationByOverallIndirect"
-        self.aboid_df = pd.read_parquet(aboid_path)
+        abodid_path = f"{self.base_path}/abodid"
+        self.abodid_df = pd.read_parquet(abodid_path)
 
-        abdsd_path = f"{base_path}/associationByDatasourceDirect"
-        self.abdsd_df = pd.read_parquet(abdsd_path)
+        abds_path = f"{self.base_path}/abds"
+        self.abds_df = pd.read_parquet(abds_path)
 
-        abdsid_path = f"{base_path}/associationByDatasourceIndirect"
-        self.abdsid_df = pd.read_parquet(abdsid_path)
+        abdsdid_path = f"{self.base_path}/abdsdid"
+        self.abdsdid_df = pd.read_parquet(abdsdid_path)
 
-        abdtd_path = f"{base_path}/associationByDatatypeDirect"
-        self.abdtd_df = pd.read_parquet(abdtd_path)
+        abdt_path = f"{self.base_path}/abdt.parquet"
+        self.abdt_df = pd.read_parquet(abdt_path)
 
-        abdtid_path = f"{base_path}/associationByDatatypeIndirect"
-        self.abdtid_df = pd.read_parquet(abdtid_path)
+        abdtdid_path = f"{self.base_path}/abdtdid"
+        self.abdtdid_df = pd.read_parquet(abdtdid_path)
+
+        if self.test_size:
+            self.target_df = self.target_df.limit(self.test_size)
+            self.disease_df = self.disease_df.limit(self.test_size)
+
+            self.abo_df = self.abo_df.head(self.test_size)
+            self.abodid_df = self.abodid_df.head(self.test_size)
+
+            self.abds_df = self.abds_df.head(self.test_size)
+            self.abdsdid_df = self.abdsdid_df.head(self.test_size)
+            
+            self.abdt_df = self.abdt_df.head(self.test_size)
+            self.abdtdid_df = self.abdtdid_df.head(self.test_size)

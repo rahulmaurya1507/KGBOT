@@ -5,22 +5,19 @@ from .id_utils import _process_id_and_type, _find_licence
 
 
 class EdgeGenerator:
-    def __init__(self, abod_df, aboid_df, abdsd_df, abdsid_df, abdtd_df, abdtid_df, test_mode=False, test_size=10):
-        self.abod_df = abod_df
-        self.aboid_df = aboid_df
-        self.abdsd_df = abdsd_df
-        self.abdsid_df = abdsid_df
-        self.abdtd_df = abdtd_df
-        self.abdtid_df = abdtid_df
-        self.test_mode = test_mode
-        self.test_size = test_size
+    def __init__(self, abo_df, abodid_df, abds_df, abdsdid_df, abdt_df, abdtdid_df):
+        self.abo_df = abo_df
+        self.abodid_df = abodid_df
+        self.abds_df = abds_df
+        self.abdsdid_df = abdsdid_df
+        self.abdt_df = abdt_df
+        self.abdtdid_df = abdtdid_df
+
     def encoding(self, row):
         return hashlib.md5(str(row).encode()).hexdigest()
 
-    def get_abod_edges(self):
-        if self.test_mode:
-            self.abod_df = self.abod_df.head(self.test_size)
-        for _, row in tqdm(self.abod_df.iterrows()):
+    def get_abo_edges(self):
+        for _, row in tqdm(self.abo_df.iterrows()):
             edge_id = self.encoding(row)
 
             disease_id, _ = _process_id_and_type(row['diseaseId'])
@@ -36,14 +33,12 @@ class EdgeGenerator:
                 edge_id,
                 gene_id,
                 disease_id,
-                'abod',
+                'abo',
                 properties
             )
 
-    def get_aboid_edges(self):
-        if self.test_mode:
-            self.aboid_df = self.aboid_df.head(self.test_size)
-        for _, row in tqdm(self.aboid_df.iterrows()):
+    def get_abodid_edges(self):
+        for _, row in tqdm(self.abodid_df.iterrows()):
             edge_id = self.encoding(row)
 
             disease_id, _ = _process_id_and_type(row['diseaseId'])
@@ -59,14 +54,12 @@ class EdgeGenerator:
                 edge_id,
                 gene_id,
                 disease_id,
-                'aboid',
+                'abodid',
                 properties
             )
 
-    def get_abdsd_edges(self):
-        if self.test_mode:
-            self.abdsd_df = self.abdsd_df.head(self.test_size)
-        for _, row in tqdm(self.abdsd_df.iterrows()):
+    def get_abds_edges(self):
+        for _, row in tqdm(self.abds_df.iterrows()):
             edge_id = self.encoding(row)
 
             disease_id, _ = _process_id_and_type(row['diseaseId'])
@@ -82,14 +75,12 @@ class EdgeGenerator:
                 edge_id,
                 gene_id,
                 disease_id,
-                row['datatypeId'] + ".abdsd",
+                row['datatypeId'] + ".abds",
                 properties
             )
 
-    def get_abdsid_edges(self):
-        if self.test_mode:
-            self.abdsid_df = self.abdsid_df.head(self.test_size)
-        for _, row in tqdm(self.abdsid_df.iterrows()):
+    def get_abdsdid_edges(self):
+        for _, row in tqdm(self.abdsdid_df.iterrows()):
             edge_id = self.encoding(row)
 
             disease_id, _ = _process_id_and_type(row['diseaseId'])
@@ -105,15 +96,13 @@ class EdgeGenerator:
                 edge_id,
                 gene_id,
                 disease_id,
-                row['datatypeId'] + ".abdsid",
+                row['datatypeId'] + ".abdsdid",
                 properties
             )
 
  
-    def get_abdtd_edges(self):
-        if self.test_mode:
-            self.abdtd_df = self.abdtd_df.head(self.test_size)
-        for _, row in tqdm(self.abdtd_df.iterrows()):
+    def get_abdt_edges(self):
+        for _, row in tqdm(self.abdt_df.iterrows()):
             edge_id = self.encoding(row)
 
             disease_id, _ = _process_id_and_type(row['diseaseId'])
@@ -129,14 +118,12 @@ class EdgeGenerator:
                 edge_id,
                 gene_id,
                 disease_id,
-                row['datatypeId'] + ".abdtd",
+                row['datatypeId'] + ".abdt",
                 properties
             )
 
-    def get_abdtid_edges(self):
-        if self.test_mode:
-            self.abdtid_df = self.abdtid_df.head(self.test_size)
-        for _, row in tqdm(self.abdtid_df.iterrows()):
+    def get_abdtdid_edges(self):
+        for _, row in tqdm(self.abdtdid_df.iterrows()):
             edge_id = self.encoding(row)
 
             disease_id, _ = _process_id_and_type(row['diseaseId'])
@@ -152,6 +139,6 @@ class EdgeGenerator:
                 edge_id,
                 gene_id,
                 disease_id,
-                row['datatypeId'] + ".abdtid",
+                row['datatypeId'] + ".abdtdid",
                 properties
             )

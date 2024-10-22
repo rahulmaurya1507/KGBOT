@@ -9,12 +9,10 @@ from biocypher._logger import logger
 
 
 class NodeGenerator:
-    def __init__(self, target_df, disease_df, node_fields, test_mode=False, test_size=10):
+    def __init__(self, target_df, disease_df, node_fields):
         self.target_df = target_df
         self.disease_df = disease_df
         self.node_fields = node_fields
-        self.test_mode = test_mode
-        self.test_size = test_size
 
     def _yield_node_type(self, df, node_field_type, ontology_class=None):
         """
@@ -36,9 +34,6 @@ class NodeGenerator:
         )
 
         logger.info(f"Generating nodes of {node_field_type}.")
-
-        if self.test_mode:
-            df = df.limit(self.test_size)
 
         for row in tqdm(df.collect()):
             # normalize id
@@ -76,4 +71,6 @@ class NodeGenerator:
         )
 
         # Diseases
-        yield from self._yield_node_type(self.disease_df, DiseaseNodeField)
+        yield from self._yield_node_type(
+            self.disease_df, DiseaseNodeField
+        )

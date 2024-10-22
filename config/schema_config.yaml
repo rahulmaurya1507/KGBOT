@@ -24,75 +24,75 @@ disease:
     description: str
     ontology: str
 
-association by overall direct:
+association by overall:
   is_a: gene to disease association
   represented_as: edge
-  input_label: abod
-  prederred_id: associations_abod
+  input_label: abo
+  prederred_id: associations_o
   properties:
     score: float
     evidenceCount: int
 
 
-association by overall indirect:
+association by overall direct indirect:
   is_a: gene to disease association
   represented_as: edge
-  input_label: aboid
-  prederred_id: associations_aboid
+  input_label: abodid
+  prederred_id: associations_abodid
   properties:
     score: float
     evidenceCount: int
 
-association by data source direct:
+association by data source:
   is_a: gene to disease association
   represented_as: edge
-  preferred_id: associations_dsd
+  preferred_id: associations_ds
   input_label: [
-    animal_model.abdsd,
-    affected_pathway.abdsd,
-    genetic_association.abdsd,
-    literature.abdsd,
-    rna_expression.abdsd,
-    somatic_mutation.abdsd,
-    known_drug.abdsd
+    animal_model.abds,
+    affected_pathway.abds,
+    genetic_association.abds,
+    literature.abds,
+    rna_expression.abds,
+    somatic_mutation.abds,
+    known_drug.abds
 ]
   properties:
     score: float
     evidenceCount: int
     datasourceId : str
 
-association by data source indirect:
+association by data source direct indirect:
   is_a: gene to disease association
   represented_as: edge
-  preferred_id: associations_dsid
+  preferred_id: associations_dsdid
   use_id: false
   input_label: [
-    animal_model.abdsid,
-    affected_pathway.abdsid,
-    genetic_association.abdsid,
-    literature.abdsid,
-    rna_expression.abdsid,
-    somatic_mutation.abdsid,
-    known_drug.abdsid
+    animal_model.abdsdid,
+    affected_pathway.abdsdid,
+    genetic_association.abdsdid,
+    literature.abdsdid,
+    rna_expression.abdsdid,
+    somatic_mutation.abdsdid,
+    known_drug.abdsdid
 ]
   properties:
     score: float
     evidenceCount: int
     datasourceId : str
 
-association by data type direct:
+association by data type:
   is_a: gene to disease association
   represented_as: edge
-  preferred_id: associations_dtd
+  preferred_id: associations_dt
   use_id: false
   input_label: [
-    animal_model.abdtd,
-    affected_pathway.abdtd,
-    genetic_association.abdtd,
-    literature.abdtd,
-    rna_expression.abdtd,
-    somatic_mutation.abdtd,
-    known_drug.abdtd
+    animal_model.abdt,
+    affected_pathway.abdt,
+    genetic_association.abdt,
+    literature.abdt,
+    rna_expression.abdt,
+    somatic_mutation.abdt,
+    known_drug.abdt
 ]
   properties:
     score: float
@@ -103,16 +103,16 @@ association by data type direct:
 association by data type indirect:
   is_a: gene to disease association
   represented_as: edge
-  preferred_id: associations_dtid
+  preferred_id: associations_dtdid
   use_id: false
   input_label: [
-    animal_model.abdtid,
-    affected_pathway.abdtid,
-    genetic_association.abdtid,
-    literature.abdtid,
-    rna_expression.abdtid,
-    somatic_mutation.abdtid,
-    known_drug.abdtid
+    animal_model.abdtdid,
+    affected_pathway.abdtdid,
+    genetic_association.abdtdid,
+    literature.abdtdid,
+    rna_expression.abdtdid,
+    somatic_mutation.abdtdid,
+    known_drug.abdtdid
 ]
   properties:
     score: float
