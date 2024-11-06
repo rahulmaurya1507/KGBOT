@@ -1,1 +1,1 @@
-KGBOT: Knowledge Graph Using BioCypher and OpenTargets
+# KGBOT: Knowledge Graph Using BioCypher and OpenTargets
