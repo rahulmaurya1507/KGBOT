@@ -102,7 +102,7 @@ def main():
         datasets=target_disease_datasets,
         node_fields=target_disease_node_fields,
         edge_fields=target_disease_edge_fields,
-        test_size=10000
+        test_size=False
     )
 
     # Write nodes

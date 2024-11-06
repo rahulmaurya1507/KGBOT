@@ -18,11 +18,11 @@ class DataLoader:
 
         # Set base path based on environment
         if self.test_size:
-            self.base_path = "data/pot_files"
-            self.environment = 'dev'
-        else:
-            self.base_path = "data/test_data"
             self.environment = 'test'
+        else:
+            self.environment = 'dev'
+        
+        self.base_path = "data/pot_files" 
 
         logger.info(f"Creating Spark session for {self.environment} environment.")
 

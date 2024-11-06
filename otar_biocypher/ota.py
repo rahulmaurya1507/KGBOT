@@ -23,7 +23,6 @@ class TargetDiseaseEvidenceAdapter:
         self.edge_fields = edge_fields
         self.test_size = test_size
 
-
         self.dl = DataLoader(test_size=self.test_size)
 
         if not self.datasets:
