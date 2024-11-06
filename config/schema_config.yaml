@@ -11,7 +11,37 @@ human gene:
     approvedName: str
     name: str
     biotype: str
+    isInMembrane : double
+    isSecreted : double
+    hasSafetyEvent : double
+    hasPocket : double
+    hasLigand : double
+    hasSmallMoleculeBinder : double
+    geneticConstraint : double
+    paralogMaxIdentityPercentage : double
+    mouseOrthologMaxIdentityPercentage : double
+    isCancerDriverGene : double
+    hasTEP : double
+    hasMouseKO : double
+    hasHighQualityChemicalProbes : double
+    maxClinicalTrialPhase : double
+    tissueSpecificity : double
+    tissueDistribution : double
 
+# Index(['id', 'approvedSymbol', 'biotype', 'transcriptIds',
+#        'canonicalTranscript', 'canonicalExons', 'genomicLocation',
+#        'alternativeGenes', 'approvedName', 'go', 'hallmarks', 'synonyms',
+#        'symbolSynonyms', 'nameSynonyms', 'functionDescriptions',
+#        'subcellularLocations', 'targetClass', 'obsoleteSymbols',
+#        'obsoleteNames', 'constraint', 'tep', 'proteinIds', 'dbXrefs',
+#        'chemicalProbes', 'homologues', 'tractability', 'safetyLiabilities',
+#        'pathways', 'targetId', 'isInMembrane', 'isSecreted', 'hasSafetyEvent',
+#        'hasPocket', 'hasLigand', 'hasSmallMoleculeBinder', 'geneticConstraint',
+#        'paralogMaxIdentityPercentage', 'mouseOrthologMaxIdentityPercentage',
+#        'isCancerDriverGene', 'hasTEP', 'mouseKOScore',
+#        'hasHighQualityChemicalProbes', 'maxClinicalTrialPhase',
+#        'tissueSpecificity', 'tissueDistribution'],
+#       dtype='object')
 
 # otar has no Bioregistry entry
 disease:
@@ -100,7 +130,7 @@ association by data type:
     datasourceId : str
 
 
-association by data type indirect:
+association by data type direct indirect:
   is_a: gene to disease association
   represented_as: edge
   preferred_id: associations_dtdid

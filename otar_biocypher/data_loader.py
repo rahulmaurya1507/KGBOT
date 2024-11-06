@@ -6,7 +6,7 @@ from pyspark.sql.functions import col
 
 
 class DataLoader:
-    def __init__(self, environment: str, test_size: int = None) -> None:
+    def __init__(self, test_size: int = None) -> None:
         """
         Initialize DataLoader with a specific environment.
         
@@ -14,16 +14,17 @@ class DataLoader:
             environment (str): The environment for loading data. Can be 'dev' or 'test'.
         """
         self.test_size = test_size
+        self.environment = None
 
         # Set base path based on environment
-        if environment == "dev":
+        if self.test_size:
             self.base_path = "data/pot_files"
-        elif environment == "test":
-            self.base_path = "data/test_data"
+            self.environment = 'dev'
         else:
-            raise ValueError(f"Unknown environment: {environment}")
+            self.base_path = "data/test_data"
+            self.environment = 'test'
 
-        logger.info(f"Creating Spark session for {environment} environment.")
+        logger.info(f"Creating Spark session for {self.environment} environment.")
 
         # Set up Spark context
         conf = (
@@ -43,7 +44,7 @@ class DataLoader:
         )
 
         # Load the data
-        target_path = f"{self.base_path}/targets"
+        target_path = f"{self.base_path}/tp"
         self.target_df = self.spark.read.parquet(target_path)
         self.target_df = self.target_df.withColumn("name", col("approvedSymbol"))
 

@@ -47,6 +47,24 @@ target_disease_node_fields = [
     TargetNodeField.TARGET_GENE_SYMBOL,
     TargetNodeField.TARGET_GENE_BIOTYPE,
     TargetNodeField.TARGET_NAME,
+    TargetNodeField.TARGET_IS_IN_MEMBRANE,
+    TargetNodeField.TARGET_IS_SECRETED,
+    TargetNodeField.TARGET_HAS_SAFETY_EVENT,
+    TargetNodeField.TARGET_HAS_POCKET,
+    TargetNodeField.TARGET_HAS_LIGAND,
+    TargetNodeField.TARGET_HAS_SMALL_MOLECULE_BINDER,
+    TargetNodeField.TARGET_GENETIC_CONSTRAINT,
+    TargetNodeField.TARGET_PARALOG_MAX_IDENTITY_PERCENTAGE,
+    TargetNodeField.TARGET_MOUSE_ORTHOLOG_MAX_IDENTITY_PERCENTAGE,
+    TargetNodeField.TARGET_IS_CANCER_DRIVER_GENE,
+    TargetNodeField.TARGET_HAS_TEP,
+    TargetNodeField.TARGET_MOUSE_KO_SCORE,
+    TargetNodeField.TARGET_HAS_HIGH_QUALITY_CHEMICAL_PROBES,
+    TargetNodeField.TARGET_MAX_CLINICAL_TRIAL_PHASE,
+    TargetNodeField.TARGET_TISSUE_SPECIFICITY,
+    TargetNodeField.TARGET_TISSUE_DISTRIBUTION,
+
+
     # optional disease fields
     DiseaseNodeField.DISEASE_CODE,
     DiseaseNodeField.DISEASE_NAME,
@@ -79,21 +97,12 @@ def main():
     # Check the schema
     bc.show_ontology_structure()
 
-    # Set server type
-    test_mode = False
-    if test_mode:
-        environment = "test"
-    else:
-        environment = "dev"
-
     # Open Targets
     target_disease_adapter = TargetDiseaseEvidenceAdapter(
         datasets=target_disease_datasets,
         node_fields=target_disease_node_fields,
         edge_fields=target_disease_edge_fields,
-        test_mode=test_mode,
-        environment=environment,
-        test_size=None
+        test_size=10000
     )
 
     # Write nodes

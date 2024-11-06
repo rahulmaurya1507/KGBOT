@@ -15,18 +15,16 @@ class TargetDiseaseEvidenceAdapter:
             datasets: list[TargetDiseaseDataset],
             node_fields: list[TargetNodeField | DiseaseNodeField],
             edge_fields: list[TargetDiseaseEdgeField],
-            test_mode: bool = False,
-            environment: str = "test",
             test_size: int = None
             
     ):
         self.datasets = datasets
         self.node_fields = node_fields
         self.edge_fields = edge_fields
-        self.test_mode = test_mode
         self.test_size = test_size
 
-        self.dl = DataLoader(environment, test_size=self.test_size)
+
+        self.dl = DataLoader(test_size=self.test_size)
 
         if not self.datasets:
             raise ValueError("datasets must be provided")
@@ -43,7 +41,7 @@ class TargetDiseaseEvidenceAdapter:
         if not DiseaseNodeField.DISEASE_ACCESSION in self.node_fields:
             raise ValueError("DiseaseNodeField.DISEASE_ACCESSION must be provided")
 
-        if self.test_mode:
+        if self.test_size:
             logger.warning("Open Targets adapter: Test mode is enabled. Only processing {self.test_size} rows.")
 
         # Initialize NodeGenerator

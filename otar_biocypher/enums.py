@@ -97,6 +97,41 @@ class TargetNodeField(Enum):
     TARGET_PATHWAYS = "pathways"
     TARGET_NAME = 'name'
 
+    TARGET_IS_IN_MEMBRANE = 'isInMembrane'
+    TARGET_IS_SECRETED = 'isSecreted'
+    TARGET_HAS_SAFETY_EVENT = 'hasSafetyEvent'
+    TARGET_HAS_POCKET = 'hasPocket'
+    TARGET_HAS_LIGAND = 'hasLigand'
+    TARGET_HAS_SMALL_MOLECULE_BINDER = 'hasSmallMoleculeBinder'
+    TARGET_GENETIC_CONSTRAINT = 'geneticConstraint'
+    TARGET_PARALOG_MAX_IDENTITY_PERCENTAGE = 'paralogMaxIdentityPercentage'
+    TARGET_MOUSE_ORTHOLOG_MAX_IDENTITY_PERCENTAGE = 'mouseOrthologMaxIdentityPercentage'
+    TARGET_IS_CANCER_DRIVER_GENE = 'isCancerDriverGene'
+    TARGET_HAS_TEP = 'hasTEP'
+    TARGET_MOUSE_KO_SCORE = 'mouseKOScore'
+    TARGET_HAS_HIGH_QUALITY_CHEMICAL_PROBES = 'hasHighQualityChemicalProbes'
+    TARGET_MAX_CLINICAL_TRIAL_PHASE = 'maxClinicalTrialPhase'
+    TARGET_TISSUE_SPECIFICITY = 'tissueSpecificity'
+    TARGET_TISSUE_DISTRIBUTION = 'tissueDistribution'
+
+
+
+
+# Index(['id', 'approvedSymbol', 'biotype', 'transcriptIds',
+#        'canonicalTranscript', 'canonicalExons', 'genomicLocation',
+#        'alternativeGenes', 'approvedName', 'go', 'hallmarks', 'synonyms',
+#        'symbolSynonyms', 'nameSynonyms', 'functionDescriptions',
+#        'subcellularLocations', 'targetClass', 'obsoleteSymbols',
+#        'obsoleteNames', 'constraint', 'tep', 'proteinIds', 'dbXrefs',
+#        'chemicalProbes', 'homologues', 'tractability', 'safetyLiabilities',
+#        'pathways', 'targetId', 'isInMembrane', 'isSecreted', 'hasSafetyEvent',
+#        'hasPocket', 'hasLigand', 'hasSmallMoleculeBinder', 'geneticConstraint',
+#        'paralogMaxIdentityPercentage', 'mouseOrthologMaxIdentityPercentage',
+#        'isCancerDriverGene', 'hasTEP', 'mouseKOScore',
+#        'hasHighQualityChemicalProbes', 'maxClinicalTrialPhase',
+#        'tissueSpecificity', 'tissueDistribution'],
+#       dtype='object')
+
 
 class DiseaseNodeField(Enum):
     """
