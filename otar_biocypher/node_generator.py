@@ -65,15 +65,15 @@ class NodeGenerator:
         """
         Yield nodes from the target and disease dataframes.
         """
-        # # Targets
-        # yield from self._yield_node_type(
-        #     self.target_df, TargetNodeField, "ensembl"
-        # )
+        # Targets
+        yield from self._yield_node_type(
+            self.target_df, TargetNodeField, "ensembl"
+        )
 
-        # # Diseases
-        # yield from self._yield_node_type(
-        #     self.disease_df, DiseaseNodeField
-        # )
+        # Diseases
+        yield from self._yield_node_type(
+            self.disease_df, DiseaseNodeField
+        )
 
         yield from self._yield_node_type(
             self.drug_df, DrugNodeField, 'chembl'

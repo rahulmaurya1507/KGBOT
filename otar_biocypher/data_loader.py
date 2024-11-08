@@ -88,6 +88,6 @@ class DataLoader:
             self.abdt_df = self.abdt_df.head(self.test_size)
             self.abdtdid_df = self.abdtdid_df.head(self.test_size)
 
-            self.drug_df = self.drug_df.head(self.test_size)
+            self.drug_df = self.drug_df.limit(self.test_size)
 
             self.dmoa_df = self.dmoa_df.head(self.test_size)

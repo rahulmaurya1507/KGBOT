@@ -135,7 +135,6 @@ class EdgeGenerator:
                 'source': 'source',
                 'licence': 'licence'
             }
-            print('edge_id, gene_id, disease_id: ', edge_id, gene_id, disease_id)
 
             yield (
                 edge_id,

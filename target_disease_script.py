@@ -21,7 +21,7 @@ def main():
     target_disease_adapter = TargetDiseaseEvidenceAdapter(
         datasets=target_disease_datasets,
         node_fields=node_fields,
-        test_size=1
+        test_size=False
     )
 
     # Start BioCypher
@@ -32,17 +32,17 @@ def main():
     # Check the schema
     bc.show_ontology_structure()
 
-    # # Write nodes
-    # bc.write_nodes(target_disease_adapter.get_nodes())
+    # Write nodes
+    bc.write_nodes(target_disease_adapter.get_nodes())
 
-    # bc.write_edges(target_disease_adapter.get_abo_edges())
-    # bc.write_edges(target_disease_adapter.get_abodid_edges())
+    bc.write_edges(target_disease_adapter.get_abo_edges())
+    bc.write_edges(target_disease_adapter.get_abodid_edges())
 
-    # bc.write_edges(target_disease_adapter.get_abds_edges())
-    # bc.write_edges(target_disease_adapter.get_abdsdid_edges())
+    bc.write_edges(target_disease_adapter.get_abds_edges())
+    bc.write_edges(target_disease_adapter.get_abdsdid_edges())
     
-    # bc.write_edges(target_disease_adapter.get_abdt_edges())
-    # bc.write_edges(target_disease_adapter.get_abdtdid_edges())
+    bc.write_edges(target_disease_adapter.get_abdt_edges())
+    bc.write_edges(target_disease_adapter.get_abdtdid_edges())
 
     bc.write_edges(target_disease_adapter.get_dmoa_edges())
 
