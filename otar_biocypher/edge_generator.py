@@ -5,13 +5,14 @@ from .id_utils import _process_id_and_type, _find_licence
 
 
 class EdgeGenerator:
-    def __init__(self, abo_df, abodid_df, abds_df, abdsdid_df, abdt_df, abdtdid_df):
+    def __init__(self, abo_df, abodid_df, abds_df, abdsdid_df, abdt_df, abdtdid_df, dmoa_df):
         self.abo_df = abo_df
         self.abodid_df = abodid_df
         self.abds_df = abds_df
         self.abdsdid_df = abdsdid_df
         self.abdt_df = abdt_df
         self.abdtdid_df = abdtdid_df
+        self.dmoa_df = dmoa_df
 
     def encoding(self, row):
         return hashlib.md5(str(row).encode()).hexdigest()
@@ -134,11 +135,35 @@ class EdgeGenerator:
                 'source': 'source',
                 'licence': 'licence'
             }
+            print('edge_id, gene_id, disease_id: ', edge_id, gene_id, disease_id)
 
             yield (
                 edge_id,
                 gene_id,
                 disease_id,
                 row['datatypeId'] + ".abdtdid",
+                properties
+            )
+    
+    def get_dmoa_edges(self):
+        for _, row in tqdm(self.dmoa_df.iterrows()):
+            edge_id = self.encoding(row)
+            drug_id, _ = _process_id_and_type(row['chemblIds'], 'chembl')
+            gene_id, _ = _process_id_and_type(row['targets'], "ensembl")
+            properties = {
+                'actionType': row['actionType'],
+                'mechanismOfAction': row['mechanismOfAction'],
+                'targetName': row['targetName'],
+                'targetType': row['targetType'],
+                'references': row['references'],
+                'source': 'source',
+                'licence': 'licence'
+            }
+
+            yield (
+                edge_id,
+                gene_id,
+                drug_id,
+                'dmoa',
                 properties
             )

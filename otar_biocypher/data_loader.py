@@ -51,6 +51,9 @@ class DataLoader:
         disease_path = f"{self.base_path}/diseases"
         self.disease_df = self.spark.read.parquet(disease_path)
 
+        drug_path = f"{self.base_path}/molecule"
+        self.drug_df = self.spark.read.parquet(drug_path)
+
         abo_path = f"{self.base_path}/abo"
         self.abo_df = pd.read_parquet(abo_path)
 
@@ -63,11 +66,14 @@ class DataLoader:
         abdsdid_path = f"{self.base_path}/abdsdid"
         self.abdsdid_df = pd.read_parquet(abdsdid_path)
 
-        abdt_path = f"{self.base_path}/abdt.parquet"
+        abdt_path = f"{self.base_path}/abdt"
         self.abdt_df = pd.read_parquet(abdt_path)
 
         abdtdid_path = f"{self.base_path}/abdtdid"
         self.abdtdid_df = pd.read_parquet(abdtdid_path)
+
+        dmoa_path = f"{self.base_path}/dmoa"
+        self.dmoa_df = pd.read_parquet(dmoa_path)
 
         if self.test_size:
             self.target_df = self.target_df.limit(self.test_size)
@@ -81,3 +87,7 @@ class DataLoader:
             
             self.abdt_df = self.abdt_df.head(self.test_size)
             self.abdtdid_df = self.abdtdid_df.head(self.test_size)
+
+            self.drug_df = self.drug_df.head(self.test_size)
+
+            self.dmoa_df = self.dmoa_df.head(self.test_size)

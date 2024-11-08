@@ -115,24 +115,6 @@ class TargetNodeField(Enum):
     TARGET_TISSUE_DISTRIBUTION = 'tissueDistribution'
 
 
-
-
-# Index(['id', 'approvedSymbol', 'biotype', 'transcriptIds',
-#        'canonicalTranscript', 'canonicalExons', 'genomicLocation',
-#        'alternativeGenes', 'approvedName', 'go', 'hallmarks', 'synonyms',
-#        'symbolSynonyms', 'nameSynonyms', 'functionDescriptions',
-#        'subcellularLocations', 'targetClass', 'obsoleteSymbols',
-#        'obsoleteNames', 'constraint', 'tep', 'proteinIds', 'dbXrefs',
-#        'chemicalProbes', 'homologues', 'tractability', 'safetyLiabilities',
-#        'pathways', 'targetId', 'isInMembrane', 'isSecreted', 'hasSafetyEvent',
-#        'hasPocket', 'hasLigand', 'hasSmallMoleculeBinder', 'geneticConstraint',
-#        'paralogMaxIdentityPercentage', 'mouseOrthologMaxIdentityPercentage',
-#        'isCancerDriverGene', 'hasTEP', 'mouseKOScore',
-#        'hasHighQualityChemicalProbes', 'maxClinicalTrialPhase',
-#        'tissueSpecificity', 'tissueDistribution'],
-#       dtype='object')
-
-
 class DiseaseNodeField(Enum):
     """
     Enum of all the fields in the disease dataset. Values are the spellings used
@@ -159,6 +141,33 @@ class DiseaseNodeField(Enum):
     DISEASE_THERAPEUTIC_AREAS = "therapeuticAreas"
     DISEASE_INDIRECT_LOCATION_IDS = "indirectLocationIds"
     DISEASE_ONTOLOGY = "ontology"
+
+
+class DrugNodeField(Enum):
+    """
+    Enum of all the fields in the drug dataset. Values are the spellings used
+    in the Open Targets parquet files.
+    """
+
+    DRUG_ACCESSION = "id"
+    _PRIMARY_ID = DRUG_ACCESSION
+    DRUG_CANONICAL_SMILES = "canonicalSmiles"
+    DRUG_INCHIKEY = "inchiKey"
+    DRUG_TYPE = "drugType"
+    DRUG_BLACK_BOX_WARNING = "blackBoxWarning"
+    DRUG_NAME = "name"
+    DRUG_YEAR_OF_FIRST_APPROVAL = "yearOfFirstApproval"
+    DRUG_MAXIMUM_CLINICAL_TRIAL_PHASE = "maximumClinicalTrialPhase"
+    DRUG_PARENT_ID = "parentId"
+    DRUG_HAS_BEEN_WITHDRAWN = "hasBeenWithdrawn"
+    DRUG_IS_APPROVED = "isApproved"
+    DRUG_TRADE_NAMES = "tradeNames"
+    DRUG_SYNONYMS = "synonyms"
+    DRUG_CROSS_REFERENCES = "crossReferences"
+    DRUG_CHILD_CHEMBL_IDS = "childChemblIds"
+    DRUG_LINKED_DISEASES = "linkedDiseases"
+    DRUG_LINKED_TARGETS = "linkedTargets"
+    DRUG_DESCRIPTION = "description"
 
 
 class TargetDiseaseEdgeField(Enum):

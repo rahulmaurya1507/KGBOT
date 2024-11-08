@@ -28,21 +28,6 @@ human gene:
     tissueSpecificity : double
     tissueDistribution : double
 
-# Index(['id', 'approvedSymbol', 'biotype', 'transcriptIds',
-#        'canonicalTranscript', 'canonicalExons', 'genomicLocation',
-#        'alternativeGenes', 'approvedName', 'go', 'hallmarks', 'synonyms',
-#        'symbolSynonyms', 'nameSynonyms', 'functionDescriptions',
-#        'subcellularLocations', 'targetClass', 'obsoleteSymbols',
-#        'obsoleteNames', 'constraint', 'tep', 'proteinIds', 'dbXrefs',
-#        'chemicalProbes', 'homologues', 'tractability', 'safetyLiabilities',
-#        'pathways', 'targetId', 'isInMembrane', 'isSecreted', 'hasSafetyEvent',
-#        'hasPocket', 'hasLigand', 'hasSmallMoleculeBinder', 'geneticConstraint',
-#        'paralogMaxIdentityPercentage', 'mouseOrthologMaxIdentityPercentage',
-#        'isCancerDriverGene', 'hasTEP', 'mouseKOScore',
-#        'hasHighQualityChemicalProbes', 'maxClinicalTrialPhase',
-#        'tissueSpecificity', 'tissueDistribution'],
-#       dtype='object')
-
 # otar has no Bioregistry entry
 disease:
   represented_as: node
@@ -53,6 +38,29 @@ disease:
     name: str
     description: str
     ontology: str
+
+drug:
+  represented_as: node
+  preferred_id: chembl
+  label_in_input: chembl
+  properties:
+    canonicalSmiles: str
+    inchiKey: str
+    drugType: str
+    blackBoxWarning: float
+    name: str
+    yearOfFirstApproval: int
+    maximumClinicalTrialPhase: int
+    parentId: str
+    hasBeenWithdrawn: float
+    isApproved: float
+    tradeNames: str
+    synonyms: str
+    crossReferences: str
+    childChemblIds: str
+    linkedDiseases: str
+    linkedTargets: str
+    description: str
 
 association by overall:
   is_a: gene to disease association
@@ -148,3 +156,15 @@ association by data type direct indirect:
     score: float
     evidenceCount: int
     datasourceId : str
+
+drug mechanism of action:
+  is_a: drug to gene association
+  represented_as: edge
+  preferred_id: drug_moa
+  input_label: dmoa
+  properties:
+    actionType: str
+    mechanismOfAction: str
+    targetName: str
+    targetType: str
+    references: str

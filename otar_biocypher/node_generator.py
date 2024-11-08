@@ -7,12 +7,12 @@ from .id_utils import _process_id_and_type
 from biocypher._logger import logger
 
 
-
 class NodeGenerator:
-    def __init__(self, target_df, disease_df, node_fields):
+    def __init__(self, target_df, disease_df, drug_df, node_fields):
         self.target_df = target_df
         self.disease_df = disease_df
         self.node_fields = node_fields
+        self.drug_df = drug_df
 
     def _yield_node_type(self, df, node_field_type, ontology_class=None):
         """
@@ -65,12 +65,17 @@ class NodeGenerator:
         """
         Yield nodes from the target and disease dataframes.
         """
-        # Targets
-        yield from self._yield_node_type(
-            self.target_df, TargetNodeField, "ensembl"
-        )
+        # # Targets
+        # yield from self._yield_node_type(
+        #     self.target_df, TargetNodeField, "ensembl"
+        # )
 
-        # Diseases
+        # # Diseases
+        # yield from self._yield_node_type(
+        #     self.disease_df, DiseaseNodeField
+        # )
+
         yield from self._yield_node_type(
-            self.disease_df, DiseaseNodeField
+            self.drug_df, DrugNodeField, 'chembl'
         )
+  
