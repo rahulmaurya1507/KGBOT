@@ -21,7 +21,7 @@ def main():
     target_disease_adapter = TargetDiseaseEvidenceAdapter(
         datasets=target_disease_datasets,
         node_fields=node_fields,
-        test_size=False
+        test_size=10000
     )
 
     # Start BioCypher
@@ -52,6 +52,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
-
-# /var/lib/neo4j/import.report

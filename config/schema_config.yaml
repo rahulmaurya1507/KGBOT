@@ -47,13 +47,13 @@ drug:
     canonicalSmiles: str
     inchiKey: str
     drugType: str
-    blackBoxWarning: float
+    blackBoxWarning: boolean
     name: str
-    yearOfFirstApproval: int
-    maximumClinicalTrialPhase: int
+    yearOfFirstApproval: double
+    maximumClinicalTrialPhase: double
     parentId: str
-    hasBeenWithdrawn: float
-    isApproved: float
+    hasBeenWithdrawn: boolean
+    isApproved: boolean
     tradeNames: str
     synonyms: str
     crossReferences: str
