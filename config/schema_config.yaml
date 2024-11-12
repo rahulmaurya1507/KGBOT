@@ -167,4 +167,17 @@ drug mechanism of action:
     mechanismOfAction: str
     targetName: str
     targetType: str
+    # references: str
+
+drug indications:
+  is_a: entity to disease association
+  preferred_id: drug_indications
+  input_label: indications
+  represented_as: edge
+  properties:
+    approvedIndications: str
+    indicationCount: int
+    efoName: str
     references: str
+    maxPhaseForIndication: float
+

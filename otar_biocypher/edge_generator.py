@@ -5,7 +5,7 @@ from .id_utils import _process_id_and_type, _find_licence
 
 
 class EdgeGenerator:
-    def __init__(self, abo_df, abodid_df, abds_df, abdsdid_df, abdt_df, abdtdid_df, dmoa_df):
+    def __init__(self, abo_df, abodid_df, abds_df, abdsdid_df, abdt_df, abdtdid_df, dmoa_df, indications_df):
         self.abo_df = abo_df
         self.abodid_df = abodid_df
         self.abds_df = abds_df
@@ -13,6 +13,7 @@ class EdgeGenerator:
         self.abdt_df = abdt_df
         self.abdtdid_df = abdtdid_df
         self.dmoa_df = dmoa_df
+        self.indications_df = indications_df
 
     def encoding(self, row):
         return hashlib.md5(str(row).encode()).hexdigest()
@@ -164,5 +165,28 @@ class EdgeGenerator:
                 gene_id,
                 drug_id,
                 'dmoa',
+                properties
+            )
+    
+    def get_indication_edges(self):
+        for _, row in tqdm(self.indications_df.iterrows()):
+            edge_id = self.encoding(row)
+            drug_id, _ = _process_id_and_type(row['id'], 'chembl')
+            disease_id, _ = _process_id_and_type(row['disease'])
+            properties = {
+                'indicationCount': row['indicationCount'],
+                'approvedIndications': row['approvedIndications'],
+                'efoName': row['efoName'],
+                'maxPhaseForIndication': row['maxPhaseForIndication'],
+                'references': row['references'],
+                'source': 'source',
+                'licence': 'licence'
+            }
+
+            yield (
+                edge_id,
+                drug_id,
+                disease_id,
+                'indications',
                 properties
             )

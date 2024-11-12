@@ -1,4 +1,4 @@
-.ot-sample
+.kgbot/
 biocypher-out/
 biocypher-log/
 data/
@@ -8,3 +8,4 @@ parquet2csv.py
 check_match.py
 data_vis.ipynb
 data_fixings.ipynb
+extra/

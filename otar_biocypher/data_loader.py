@@ -75,6 +75,9 @@ class DataLoader:
         dmoa_path = f"{self.base_path}/dmoa"
         self.dmoa_df = pd.read_parquet(dmoa_path)
 
+        indications = f"{self.base_path}/indications"
+        self.indications_df = pd.read_parquet(indications)
+
         if self.test_size:
             self.target_df = self.target_df.limit(self.test_size)
             self.disease_df = self.disease_df.limit(self.test_size)
@@ -91,3 +94,5 @@ class DataLoader:
             self.drug_df = self.drug_df.limit(self.test_size)
 
             self.dmoa_df = self.dmoa_df.head(self.test_size)
+
+            self.indications_df = self.indications_df.head(self.test_size)

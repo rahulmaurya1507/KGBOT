@@ -54,7 +54,8 @@ class TargetDiseaseEvidenceAdapter:
             self.dl.abdsdid_df,
             self.dl.abdt_df,
             self.dl.abdtdid_df,
-            self.dl.dmoa_df
+            self.dl.dmoa_df,
+            self.dl.indications_df
         )
 
     def get_nodes(self):
@@ -81,3 +82,6 @@ class TargetDiseaseEvidenceAdapter:
     
     def get_dmoa_edges(self):
         return self.edge_generator.get_dmoa_edges()
+    
+    def get_indication_edges(self):
+        return self.edge_generator.get_indication_edges()
