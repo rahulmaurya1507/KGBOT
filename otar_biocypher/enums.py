@@ -168,25 +168,21 @@ class DrugNodeField(Enum):
     DRUG_LINKED_DISEASES = "linkedDiseases"
     DRUG_LINKED_TARGETS = "linkedTargets"
     DRUG_DESCRIPTION = "description"
+    DRUG_INDICATION_COUNT_IN_DISEASE = 'IndicationCountInDisease'
 
 
-class TargetDiseaseEdgeField(Enum):
+class HPONodeField(Enum):
     """
-    Enum of all the fields in the target-disease dataset. Used to generate the
-    bulk of relationships in the graph. Values are the spellings used in the
-    Open Targets parquet files.
+    Enum of all the fields in the hpo dataset. Values are the spellings used
+    in the Open Targets parquet files.
     """
 
-    # mandatory fields
-    INTERACTION_ACCESSION = "id"
+    HPO_ACCESSION = "id"
+    _PRIMARY_ID = HPO_ACCESSION
 
-    TARGET_GENE_ENSG = "targetId"
-    _PRIMARY_SOURCE_ID = TARGET_GENE_ENSG
-
-    DISEASE_ACCESSION = "diseaseId"
-    _PRIMARY_TARGET_ID = DISEASE_ACCESSION
-
-    TYPE = "datatypeId"
-    SOURCE = "datasourceId"
-    LITERATURE = "literature"
-    SCORE = "score"
+    HPO_DB_XREFS = "dbXRefs"
+    HPO_DESCRIPTION = "description"
+    HPO_NAME = "name"
+    HPO_NAMESPACE = "namespace"
+    HPO_OBSOLETE_TERMS = "obsolete_terms"
+    HPO_PARENTS = "parents"

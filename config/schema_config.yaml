@@ -31,8 +31,8 @@ human gene:
 # otar has no Bioregistry entry
 disease:
   represented_as: node
-  preferred_id: [mondo, efo, hp, orphanet, otar, oba, ncit, doid, obi, ogms, go, mp]
-  label_in_input: [mondo, efo, hp, orphanet, otar, oba, ncit, doid, obi, ogms, go, mp]
+  preferred_id: [mondo.disease, efo.disease, hp.disease, orphanet.disease, otar.disease, oba.disease, ncit.disease, doid.disease, obi.disease, ogms.disease, go.disease, mp.disease]
+  label_in_input: [mondo.disease, efo.disease, hp.disease, orphanet.disease, otar.disease, oba.disease, ncit.disease, doid.disease, obi.disease, ogms.disease, go.disease, mp.disease]
   properties:
     code: str
     name: str
@@ -54,13 +54,27 @@ drug:
     parentId: str
     hasBeenWithdrawn: boolean
     isApproved: boolean
-    tradeNames: str
-    synonyms: str
+    tradeNames: str[]
+    synonyms: str[]
     crossReferences: str
     childChemblIds: str
     linkedDiseases: str
     linkedTargets: str
     description: str
+    IndicationCountInDisease: int
+
+human phenotype ontology:
+  is_a: phenotypic feature
+  represented_as: node
+  preferred_id: ['bfo.hpo', 'chebi.hpo', 'cl.hpo', 'go.hpo', 'hp.hpo', 'hsapdv.hpo', 'mpath.hpo', 'nbo.hpo', 'ncbitaxon.hpo', 'obi.hpo', 'pato.hpo', 'pr.hpo', 'so.hpo', 'uberon.hpo', 'hgnc.hpo']
+  label_in_input: ['bfo.hpo', 'chebi.hpo', 'cl.hpo', 'go.hpo', 'hp.hpo', 'hsapdv.hpo', 'mpath.hpo', 'nbo.hpo', 'ncbitaxon.hpo', 'obi.hpo', 'pato.hpo', 'pr.hpo', 'so.hpo', 'uberon.hpo', 'hgnc.hpo']
+  properties:
+    dbXRefs: str[]
+    description: str
+    name: str
+    namespace: str[]
+    obsolete_terms: str[]
+    parents: str[]
 
 association by overall:
   is_a: gene to disease association
@@ -157,6 +171,23 @@ association by data type direct indirect:
     evidenceCount: int
     datasourceId : str
 
+gene pairwise molecular interations:
+  is_a: gene to gene association
+  represented_as: edge
+  preferred_id: gene_interactions
+  input_label: molecular_interactions
+  properties:
+    sourceDatabase: str
+    intA: str
+    intABiologicalRole: str
+    intB: str
+    intBBiologicalRole: str
+    speciesA: str
+    speciesB: str
+    count: int
+    scoring: float
+
+
 drug mechanism of action:
   is_a: drug to gene association
   represented_as: edge
@@ -175,9 +206,16 @@ drug indications:
   input_label: indications
   represented_as: edge
   properties:
-    approvedIndications: str
-    indicationCount: int
+    approvedIndications: str[]
+    indicationCount: long
     efoName: str
-    references: str
+    references: str[]
     maxPhaseForIndication: float
 
+disease to phenotype:
+  is_a: disease to phenotypic feature association
+  preferred_id: disease_phenotype
+  input_label: disease_phenotype
+  represented_as: edge
+  properties:
+    evidence: str[]

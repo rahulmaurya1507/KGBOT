@@ -2,7 +2,7 @@
 cd /usr/app/
 cp -r /src/* .
 cp config/biocypher_docker_config.yaml config/biocypher_config.yaml
-pip install -r requirements.txt
+pip install -r requirements.txt -q
 
 # python3 scripts/target_disease_script.py
 python3 target_disease_script.py

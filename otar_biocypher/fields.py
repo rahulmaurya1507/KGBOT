@@ -8,7 +8,7 @@ from .ota import (
     TargetNodeField,
     DiseaseNodeField,
     DrugNodeField,
-    TargetDiseaseEdgeField,
+    HPONodeField
 )
 
 
@@ -85,17 +85,15 @@ node_fields = [
     DrugNodeField.DRUG_CHILD_CHEMBL_IDS,
     DrugNodeField.DRUG_LINKED_DISEASES,
     DrugNodeField.DRUG_LINKED_TARGETS,
-    DrugNodeField.DRUG_DESCRIPTION
-]
-
-target_disease_edge_fields = [
-    # mandatory fields
-    TargetDiseaseEdgeField.INTERACTION_ACCESSION,
-    TargetDiseaseEdgeField.TARGET_GENE_ENSG,
-    TargetDiseaseEdgeField.DISEASE_ACCESSION,
-    TargetDiseaseEdgeField.TYPE,
-    TargetDiseaseEdgeField.SOURCE,
-    # optional fields
-    TargetDiseaseEdgeField.SCORE,
-    TargetDiseaseEdgeField.LITERATURE,
+    DrugNodeField.DRUG_DESCRIPTION,
+    DrugNodeField.DRUG_INDICATION_COUNT_IN_DISEASE,
+    # mandatory hpo fields
+    HPONodeField.HPO_ACCESSION,
+    # optional hpo fields
+    HPONodeField.HPO_NAME,
+    HPONodeField.HPO_DESCRIPTION,
+    HPONodeField.HPO_DB_XREFS,
+    HPONodeField.HPO_NAMESPACE,
+    HPONodeField.HPO_OBSOLETE_TERMS,
+    HPONodeField.HPO_PARENTS
 ]

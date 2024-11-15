@@ -1,3 +1,5 @@
+import re
+
 from tqdm import tqdm
 
 from .enums import *
@@ -8,11 +10,13 @@ from biocypher._logger import logger
 
 
 class NodeGenerator:
-    def __init__(self, target_df, disease_df, drug_df, node_fields):
+    def __init__(self, target_df, disease_df, drug_df, hpo_df, node_fields):
         self.target_df = target_df
         self.disease_df = disease_df
-        self.node_fields = node_fields
         self.drug_df = drug_df
+        self.hpo_df = hpo_df
+        self.node_fields = node_fields
+
 
     def _yield_node_type(self, df, node_field_type, ontology_class=None):
         """
@@ -42,6 +46,13 @@ class NodeGenerator:
             else:
                 input_id = row[node_field_type._PRIMARY_ID.value]
             _id, _type = _process_id_and_type(input_id, ontology_class)
+
+            if node_field_type == HPONodeField:
+                label = row['id']
+                _type = re.match(r'^[A-Za-z]+', label).group().lower() + '.hpo'
+            if node_field_type == DiseaseNodeField:
+                label = row['id']
+                _type = re.match(r'^[A-Za-z]+', label).group().lower() + '.disease'
 
             if not _id:
                 continue
@@ -77,5 +88,9 @@ class NodeGenerator:
 
         yield from self._yield_node_type(
             self.drug_df, DrugNodeField, 'chembl'
+        )
+
+        yield from self._yield_node_type(
+            self.hpo_df, HPONodeField
         )
   

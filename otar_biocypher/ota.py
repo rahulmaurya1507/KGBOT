@@ -11,15 +11,13 @@ class TargetDiseaseEvidenceAdapter:
     def __init__(
             self,
             datasets: list[TargetDiseaseDataset],
-            node_fields: list[TargetNodeField | DiseaseNodeField | DrugNodeField],
+            node_fields: list[TargetNodeField | DiseaseNodeField | DrugNodeField | HPONodeField],
             test_size: int = None
             
     ):
         self.datasets = datasets
         self.node_fields = node_fields
         self.test_size = test_size
-
-        self.dl = DataLoader(test_size=self.test_size)
 
         if not self.datasets:
             raise ValueError("datasets must be provided")
@@ -39,14 +37,21 @@ class TargetDiseaseEvidenceAdapter:
         if self.test_size:
             logger.warning("Open Targets adapter: Test mode is enabled. Only processing {self.test_size} rows.")
 
+        # Initialize DataLoader
+        self.dl = DataLoader(
+            test_size=self.test_size
+        )
+
         # Initialize NodeGenerator
         self.node_generator = NodeGenerator(
             self.dl.target_df,
             self.dl.disease_df,
             self.dl.drug_df,
+            self.dl.hpo_df,
             self.node_fields
         )
 
+        # Initialize EdgeGenerator
         self.edge_generator = EdgeGenerator(
             self.dl.abo_df,
             self.dl.abodid_df,
@@ -55,7 +60,9 @@ class TargetDiseaseEvidenceAdapter:
             self.dl.abdt_df,
             self.dl.abdtdid_df,
             self.dl.dmoa_df,
-            self.dl.indications_df
+            self.dl.indications_df,
+            self.dl.molecular_interactions_df,
+            self.dl.disease2phenotype_df
         )
 
     def get_nodes(self):
@@ -85,3 +92,9 @@ class TargetDiseaseEvidenceAdapter:
     
     def get_indication_edges(self):
         return self.edge_generator.get_indication_edges()
+    
+    def get_molecular_interactions_edges(self):
+        return self.edge_generator.get_molecular_interactions_edges()
+    
+    def get_disease2phenotype_edges(self):
+        return self.edge_generator.get_disease2phenotype_edges()
