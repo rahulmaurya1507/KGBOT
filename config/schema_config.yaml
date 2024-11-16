@@ -76,6 +76,21 @@ human phenotype ontology:
     obsolete_terms: str[]
     parents: str[]
 
+reactome:
+  is_a: pathway
+  represented_as: node
+  preferred_id: reactome
+  label_in_input: reactome
+  properties:
+    name: str
+    label: str
+    ancestors: str[]
+    descendants: str[]
+    children: str[]
+    parents: str[]
+    path: str[]
+
+
 association by overall:
   is_a: gene to disease association
   represented_as: edge

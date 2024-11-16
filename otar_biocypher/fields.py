@@ -8,7 +8,8 @@ from .ota import (
     TargetNodeField,
     DiseaseNodeField,
     DrugNodeField,
-    HPONodeField
+    HPONodeField,
+    ReactomeNodeField
 )
 
 
@@ -95,5 +96,14 @@ node_fields = [
     HPONodeField.HPO_DB_XREFS,
     HPONodeField.HPO_NAMESPACE,
     HPONodeField.HPO_OBSOLETE_TERMS,
-    HPONodeField.HPO_PARENTS
+    HPONodeField.HPO_PARENTS,
+    # mandatory reactome fields
+    ReactomeNodeField.REACTOME_ACCESSION,
+    # optional reactome fields
+    ReactomeNodeField.REACTOME_NAME,
+    ReactomeNodeField.REACTOME_LABEL,
+    ReactomeNodeField.REACTOME_ANCESTORS,
+    ReactomeNodeField.REACTOME_DESCENDANTS,
+    ReactomeNodeField.REACTOME_CHILDREN,
+    ReactomeNodeField.REACTOME_PARENT,
 ]

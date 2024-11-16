@@ -10,11 +10,12 @@ from biocypher._logger import logger
 
 
 class NodeGenerator:
-    def __init__(self, target_df, disease_df, drug_df, hpo_df, node_fields):
+    def __init__(self, target_df, disease_df, drug_df, hpo_df, reactome_df, node_fields):
         self.target_df = target_df
         self.disease_df = disease_df
         self.drug_df = drug_df
         self.hpo_df = hpo_df
+        self.reactome_df = reactome_df
         self.node_fields = node_fields
 
 
@@ -92,5 +93,9 @@ class NodeGenerator:
 
         yield from self._yield_node_type(
             self.hpo_df, HPONodeField
+        )
+
+        yield from self._yield_node_type(
+            self.reactome_df, ReactomeNodeField, 'reactome'
         )
   

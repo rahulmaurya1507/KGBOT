@@ -186,3 +186,20 @@ class HPONodeField(Enum):
     HPO_NAMESPACE = "namespace"
     HPO_OBSOLETE_TERMS = "obsolete_terms"
     HPO_PARENTS = "parents"
+
+class ReactomeNodeField(Enum):
+    """
+    Enum of all the fields in the reactome dataset. Values are the spellings used
+    in the Open Targets parquet files.
+    """
+
+    REACTOME_ACCESSION = "id"
+    _PRIMARY_ID = REACTOME_ACCESSION
+
+    REACTOME_NAME = 'name'
+    REACTOME_LABEL = 'label'
+    REACTOME_ANCESTORS = 'ancestors'
+    REACTOME_DESCENDANTS = 'descendants'
+    REACTOME_CHILDREN = 'children'
+    REACTOME_PARENT = 'parents'
+    REACTOME_PATH = 'path'

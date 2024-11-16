@@ -54,6 +54,9 @@ class DataLoader:
         hpo_path = f"{self.base_path}/hpo"
         self.hpo_df = self.spark.read.parquet(hpo_path)
 
+        reactome_path = f"{self.base_path}/reactome"
+        self.reactome_df = self.spark.read.parquet(reactome_path)
+
         #============================= Edges Data ===============================#
         abo_path = f"{self.base_path}/abo"
         self.abo_df = self.spark.read.parquet(abo_path)
@@ -94,6 +97,7 @@ class DataLoader:
             self.disease_df = self.disease_df.limit(self.test_size)
             self.drug_df = self.drug_df.limit(self.test_size)
             self.hpo_df = self.hpo_df.limit(self.test_size)
+            self.reactome_df = self.reactome_df.limit(self.test_size)
 
             #============================= Edges Data ===============================#
             self.abo_df = self.abo_df.limit(self.test_size)

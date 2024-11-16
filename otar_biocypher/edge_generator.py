@@ -52,7 +52,7 @@ class EdgeGenerator:
                 'abo',
                 properties
             )
-
+    
     def get_abodid_edges(self):
         for row in tqdm(self.abodid_df.collect()):
             edge_id = self.encoding(row)
@@ -77,111 +77,93 @@ class EdgeGenerator:
     def get_abds_edges(self):
         for row in tqdm(self.abds_df.collect()):
             edge_id = self.encoding(row)
-
             disease_id, _ = _process_id_and_type(row['diseaseId'])
             gene_id, _ = _process_id_and_type(row['targetId'], "ensembl")
-            properties = {
-                'score': row['score'],
-                'evidenceCount': row['evidenceCount'],
-                'source': row['datasourceId'],
-                'licence': _find_licence(row['datasourceId'])
-            }
-
             yield (
                 edge_id,
                 gene_id,
                 disease_id,
-                row['datatypeId'] + ".abds",
-                properties
+                f"{row['datatypeId']}.abds",
+                {
+                    'score': row['score'],
+                    'evidenceCount': row['evidenceCount'],
+                    'source': row['datasourceId'],
+                    'licence': _find_licence(row['datasourceId'])
+                }
             )
 
     def get_abdsdid_edges(self):
-        for row in tqdm(self.abdsdid_df.collect()):
+        for row in self.abdsdid_df.collect():
             edge_id = self.encoding(row)
-
             disease_id, _ = _process_id_and_type(row['diseaseId'])
             gene_id, _ = _process_id_and_type(row['targetId'], "ensembl")
-            properties = {
-                'score': row['score'],
-                'evidenceCount': row['evidenceCount'],
-                'source': row['datasourceId'],
-                'licence': _find_licence(row['datasourceId'])
-            }
 
             yield (
                 edge_id,
                 gene_id,
                 disease_id,
-                row['datatypeId'] + ".abdsdid",
-                properties
+                f"{row['datatypeId']}.abdsdid",
+                {
+                'score': row['score'],
+                'evidenceCount': row['evidenceCount'],
+                'source': row['datasourceId'],
+                'licence': _find_licence(row['datasourceId'])
+            }
             )
 
  
     def get_abdt_edges(self):
         for row in tqdm(self.abdt_df.collect()):
             edge_id = self.encoding(row)
-
             disease_id, _ = _process_id_and_type(row['diseaseId'])
             gene_id, _ = _process_id_and_type(row['targetId'], "ensembl")
-            properties = {
+            yield (
+                edge_id,
+                gene_id,
+                disease_id,
+                f"{row['datatypeId']}.abdt", {
                 'score': row['score'],
                 'evidenceCount': row['evidenceCount'],
                 'source': 'source',
                 'licence': 'licence'
             }
-
-            yield (
-                edge_id,
-                gene_id,
-                disease_id,
-                row['datatypeId'] + ".abdt",
-                properties
             )
 
     def get_abdtdid_edges(self):
         for row in tqdm(self.abdtdid_df.collect()):
             edge_id = self.encoding(row)
-
             disease_id, _ = _process_id_and_type(row['diseaseId'])
             gene_id, _ = _process_id_and_type(row['targetId'], "ensembl")
-            properties = {
-                'score': row['score'],
-                'evidenceCount': row['evidenceCount'],
-                'source': 'source',
-                'licence': 'licence'
-            }
-
             yield (
                 edge_id,
                 gene_id,
                 disease_id,
-                row['datatypeId'] + ".abdtdid",
-                properties
+                f"{row['datatypeId']}.abdtdid",
+                {
+                    'score': row['score'],
+                    'evidenceCount': row['evidenceCount'],
+                    'source': 'source',
+                    'licence': 'licence'
+                }
             )
     
     def get_dmoa_edges(self):
-        
         for row in tqdm(self.dmoa_df.collect()):
             edge_id = self.encoding(row)
             drug_id, _ = _process_id_and_type(row['chemblIds'], 'chembl')
             gene_id, _ = _process_id_and_type(row['targets'], "ensembl")
             properties = {
-                'actionType': row['actionType'],
-                'mechanismOfAction': row['mechanismOfAction'],
-                'targetName': row['targetName'],
-                'targetType': row['targetType'],
-                'references': row['references'],
-                'source': 'source',
-                'licence': 'licence'
+                key: row[key] for key in [
+                    'actionType', 
+                    'mechanismOfAction', 
+                    'targetName', 
+                    'targetType', 
+                    'references'
+                ]
             }
+            properties.update({'source': 'source', 'licence': 'licence'})
 
-            yield (
-                edge_id,
-                gene_id,
-                drug_id,
-                'dmoa',
-                properties
-            )
+            yield edge_id, gene_id, drug_id, 'dmoa', properties
     
     def get_indication_edges(self):
         for row in tqdm(self.indications_df.collect()):
@@ -237,7 +219,6 @@ class EdgeGenerator:
             )
     
     def get_disease2phenotype_edges(self):
-        print('get_disease2phenotype_edges')
         for row in tqdm(self.disease2phenotype_df.collect()):
             edge_id = self.encoding(row)
             disease_id, _ = _process_id_and_type(row['disease'])
@@ -245,8 +226,6 @@ class EdgeGenerator:
 
             evidence = [row.asDict() for row in row['evidence']]
             evidence = list(map(str, evidence))
-
-
 
             properties = {
                 'evidence': evidence,

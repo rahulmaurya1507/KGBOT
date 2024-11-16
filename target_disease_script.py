@@ -1,3 +1,5 @@
+import time
+
 from biocypher import BioCypher
 
 from otar_biocypher.fields import (
@@ -21,7 +23,7 @@ def main():
     target_disease_adapter = TargetDiseaseEvidenceAdapter(
         datasets=target_disease_datasets,
         node_fields=node_fields,
-        test_size=200000
+        test_size=50000
     )
 
     # Start BioCypher
@@ -32,25 +34,26 @@ def main():
     # Check the schema
     bc.show_ontology_structure()
 
-    # Write nodes
+    # # Write nodes
     bc.write_nodes(target_disease_adapter.get_nodes())
 
-    bc.write_edges(target_disease_adapter.get_abo_edges())
-    bc.write_edges(target_disease_adapter.get_abodid_edges())
+    # bc.write_edges(target_disease_adapter.get_abo_edges())
+    # bc.write_edges(target_disease_adapter.get_abodid_edges())
 
-    bc.write_edges(target_disease_adapter.get_abds_edges())
-    bc.write_edges(target_disease_adapter.get_abdsdid_edges())
+    # bc.write_edges(target_disease_adapter.get_abds_edges())
+    # bc.write_edges(target_disease_adapter.get_abdsdid_edges())
     
-    bc.write_edges(target_disease_adapter.get_abdt_edges())
-    bc.write_edges(target_disease_adapter.get_abdtdid_edges())
+    # bc.write_edges(target_disease_adapter.get_abdt_edges())
+    # bc.write_edges(target_disease_adapter.get_abdtdid_edges())
 
-    bc.write_edges(target_disease_adapter.get_molecular_interactions_edges())
+    # bc.write_edges(target_disease_adapter.get_molecular_interactions_edges())
 
-    bc.write_edges(target_disease_adapter.get_dmoa_edges())
+    # bc.write_edges(target_disease_adapter.get_dmoa_edges())
 
-    bc.write_edges(target_disease_adapter.get_indication_edges())
+    # bc.write_edges(target_disease_adapter.get_indication_edges())
 
-    bc.write_edges(target_disease_adapter.get_disease2phenotype_edges())
+
+    # bc.write_edges(target_disease_adapter.get_disease2phenotype_edges())
 
     # # Post import functions
     bc.write_import_call()
@@ -58,3 +61,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# elapsed time:  24.25932765007019

@@ -11,7 +11,13 @@ class TargetDiseaseEvidenceAdapter:
     def __init__(
             self,
             datasets: list[TargetDiseaseDataset],
-            node_fields: list[TargetNodeField | DiseaseNodeField | DrugNodeField | HPONodeField],
+            node_fields: list[
+                TargetNodeField,
+                DiseaseNodeField,
+                DrugNodeField,
+                HPONodeField,
+                ReactomeNodeField
+            ],
             test_size: int = None
             
     ):
@@ -48,7 +54,8 @@ class TargetDiseaseEvidenceAdapter:
             self.dl.disease_df,
             self.dl.drug_df,
             self.dl.hpo_df,
-            self.node_fields
+            self.dl.reactome_df,
+            self.node_fields,
         )
 
         # Initialize EdgeGenerator
