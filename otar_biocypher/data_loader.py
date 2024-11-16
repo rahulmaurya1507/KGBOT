@@ -1,12 +1,7 @@
 import pandas as pd
 from biocypher._logger import logger
-from pyspark.sql import SparkSession
 
-
-pd.set_option('display.max_rows', None)     # Show all rows
-pd.set_option('display.max_colwidth', None) # Prevent truncating column contents
-pd.set_option('display.width', 100000) 
-pd.set_option('display.max_columns', None)  # Show all columns
+from .spark_session import spark
 
 
 class DataLoader:
@@ -30,63 +25,55 @@ class DataLoader:
 
         logger.info(f"Creating Spark session for {self.environment} environment.")
 
-        # Create SparkSession
-        self.spark = (
-            SparkSession.builder.master("local")  # type: ignore
-            .appName("otar_biocypher")
-            .config('spark.driver.memory', '4g')
-            .config('spark.executor.memory', '4g')
-            .getOrCreate()
-        )
 
         # Load the data
         #============================= Nodes Data ===============================#
         logger.info('Starting Data Loading!!!')
         target_path = f"{self.base_path}/tp"
-        self.target_df = self.spark.read.parquet(target_path)
+        self.target_df = spark.read.parquet(target_path)
 
         disease_path = f"{self.base_path}/diseases"
-        self.disease_df = self.spark.read.parquet(disease_path)
+        self.disease_df = spark.read.parquet(disease_path)
 
         drug_path = f"{self.base_path}/molecule"
-        self.drug_df = self.spark.read.parquet(drug_path)
+        self.drug_df = spark.read.parquet(drug_path)
 
         hpo_path = f"{self.base_path}/hpo"
-        self.hpo_df = self.spark.read.parquet(hpo_path)
+        self.hpo_df = spark.read.parquet(hpo_path)
 
         reactome_path = f"{self.base_path}/reactome"
-        self.reactome_df = self.spark.read.parquet(reactome_path)
+        self.reactome_df = spark.read.parquet(reactome_path)
 
         #============================= Edges Data ===============================#
         abo_path = f"{self.base_path}/abo"
-        self.abo_df = self.spark.read.parquet(abo_path)
+        self.abo_df = spark.read.parquet(abo_path)
 
         abodid_path = f"{self.base_path}/abodid"
-        self.abodid_df = self.spark.read.parquet(abodid_path)
+        self.abodid_df = spark.read.parquet(abodid_path)
 
         abds_path = f"{self.base_path}/abds"
-        self.abds_df = self.spark.read.parquet(abds_path)
+        self.abds_df = spark.read.parquet(abds_path)
 
         abdsdid_path = f"{self.base_path}/abdsdid"
-        self.abdsdid_df = self.spark.read.parquet(abdsdid_path)
+        self.abdsdid_df = spark.read.parquet(abdsdid_path)
 
         abdt_path = f"{self.base_path}/abdt"
-        self.abdt_df = self.spark.read.parquet(abdt_path)
+        self.abdt_df = spark.read.parquet(abdt_path)
 
         abdtdid_path = f"{self.base_path}/abdtdid"
-        self.abdtdid_df = self.spark.read.parquet(abdtdid_path)
+        self.abdtdid_df = spark.read.parquet(abdtdid_path)
 
         molecular_interactions_path = f"{self.base_path}/interaction"
-        self.molecular_interactions_df = self.spark.read.parquet(molecular_interactions_path)
+        self.molecular_interactions_df = spark.read.parquet(molecular_interactions_path)
 
         dmoa_path = f"{self.base_path}/dmoa"
-        self.dmoa_df = self.spark.read.parquet(dmoa_path)
+        self.dmoa_df = spark.read.parquet(dmoa_path)
 
         indications_path = f"{self.base_path}/indications"
-        self.indications_df = self.spark.read.parquet(indications_path)
+        self.indications_df = spark.read.parquet(indications_path)
 
         disease2phenotype_path = f"{self.base_path}/diseaseToPhenotype"
-        self.disease2phenotype_df = self.spark.read.parquet(disease2phenotype_path)
+        self.disease2phenotype_df = spark.read.parquet(disease2phenotype_path)
         
         logger.info('Data Loading Completed!!!')
 

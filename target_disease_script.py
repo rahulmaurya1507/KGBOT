@@ -11,6 +11,10 @@ from otar_biocypher.ota import (
     TargetDiseaseEvidenceAdapter
 )
 
+from otar_biocypher.edge_optimization import (
+    EdgeGenerator
+)
+
 # VSCode does not add the root directory to the path (by default?). Not sure why
 # this works sometimes and not others. This is a workaround.
 
@@ -19,12 +23,12 @@ def main():
     """
     Main function running the import using BioCypher and the adapter.
     """
-    # Open Targets
-    target_disease_adapter = TargetDiseaseEvidenceAdapter(
-        datasets=target_disease_datasets,
-        node_fields=node_fields,
-        test_size=50000
-    )
+    # # Open Targets
+    # target_disease_adapter = TargetDiseaseEvidenceAdapter(
+    #     datasets=target_disease_datasets,
+    #     node_fields=node_fields,
+    #     test_size=200000
+    # )
 
     # Start BioCypher
     bc = BioCypher(
@@ -32,12 +36,18 @@ def main():
     )
 
     # Check the schema
-    bc.show_ontology_structure()
+    # bc.show_ontology_structure()
 
     # # Write nodes
-    bc.write_nodes(target_disease_adapter.get_nodes())
+    # bc.write_nodes(target_disease_adapter.get_nodes())
+
+    start = time.time()
 
     # bc.write_edges(target_disease_adapter.get_abo_edges())
+    bc.write_edges(EdgeGenerator().get_abo_edges())
+    end = time.time()
+    print(f"elapsed time: {end - start}")
+
     # bc.write_edges(target_disease_adapter.get_abodid_edges())
 
     # bc.write_edges(target_disease_adapter.get_abds_edges())
@@ -62,4 +72,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-# elapsed time:  24.25932765007019
+# elapsed time: 24.364457368850708

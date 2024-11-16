@@ -1,3 +1,4 @@
+import time
 import hashlib
 from tqdm import tqdm
 
@@ -33,6 +34,7 @@ class EdgeGenerator:
         return hashlib.md5(str(row).encode()).hexdigest()
 
     def get_abo_edges(self):
+        self.abo_df.collect()
         for row in tqdm(self.abo_df.collect()):
             edge_id = self.encoding(row)
 

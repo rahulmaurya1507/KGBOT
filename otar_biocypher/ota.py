@@ -5,6 +5,7 @@ from biocypher._logger import logger
 
 from .node_generator import NodeGenerator
 from .edge_generator import EdgeGenerator
+from .edge_optimization import EdgeGenerator
 from .data_loader import DataLoader
 
 class TargetDiseaseEvidenceAdapter:
@@ -58,18 +59,21 @@ class TargetDiseaseEvidenceAdapter:
             self.node_fields,
         )
 
-        # Initialize EdgeGenerator
+        # # Initialize EdgeGenerator
+        # self.edge_generator = EdgeGenerator(
+        #     self.dl.abo_df,
+        #     self.dl.abodid_df,
+        #     self.dl.abds_df,
+        #     self.dl.abdsdid_df,
+        #     self.dl.abdt_df,
+        #     self.dl.abdtdid_df,
+        #     self.dl.dmoa_df,
+        #     self.dl.indications_df,
+        #     self.dl.molecular_interactions_df,
+        #     self.dl.disease2phenotype_df
+        # )
         self.edge_generator = EdgeGenerator(
-            self.dl.abo_df,
-            self.dl.abodid_df,
-            self.dl.abds_df,
-            self.dl.abdsdid_df,
-            self.dl.abdt_df,
-            self.dl.abdtdid_df,
-            self.dl.dmoa_df,
-            self.dl.indications_df,
-            self.dl.molecular_interactions_df,
-            self.dl.disease2phenotype_df
+            self.dl.abo_df
         )
 
     def get_nodes(self):
@@ -79,29 +83,29 @@ class TargetDiseaseEvidenceAdapter:
     def get_abo_edges(self):
         return self.edge_generator.get_abo_edges()
 
-    def get_abodid_edges(self):
-        return self.edge_generator.get_abodid_edges()
+    # def get_abodid_edges(self):
+    #     return self.edge_generator.get_abodid_edges()
 
-    def get_abds_edges(self):
-        return self.edge_generator.get_abds_edges()
+    # def get_abds_edges(self):
+    #     return self.edge_generator.get_abds_edges()
 
-    def get_abdsdid_edges(self):
-        return self.edge_generator.get_abdsdid_edges()
+    # def get_abdsdid_edges(self):
+    #     return self.edge_generator.get_abdsdid_edges()
     
-    def get_abdt_edges(self):
-        return self.edge_generator.get_abdt_edges()
+    # def get_abdt_edges(self):
+    #     return self.edge_generator.get_abdt_edges()
 
-    def get_abdtdid_edges(self):
-        return self.edge_generator.get_abdtdid_edges()
+    # def get_abdtdid_edges(self):
+    #     return self.edge_generator.get_abdtdid_edges()
     
-    def get_dmoa_edges(self):
-        return self.edge_generator.get_dmoa_edges()
+    # def get_dmoa_edges(self):
+    #     return self.edge_generator.get_dmoa_edges()
     
-    def get_indication_edges(self):
-        return self.edge_generator.get_indication_edges()
+    # def get_indication_edges(self):
+    #     return self.edge_generator.get_indication_edges()
     
-    def get_molecular_interactions_edges(self):
-        return self.edge_generator.get_molecular_interactions_edges()
+    # def get_molecular_interactions_edges(self):
+    #     return self.edge_generator.get_molecular_interactions_edges()
     
-    def get_disease2phenotype_edges(self):
-        return self.edge_generator.get_disease2phenotype_edges()
+    # def get_disease2phenotype_edges(self):
+    #     return self.edge_generator.get_disease2phenotype_edges()
