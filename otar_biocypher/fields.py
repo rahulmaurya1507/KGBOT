@@ -61,6 +61,7 @@ node_fields = [
     TargetNodeField.TARGET_MAX_CLINICAL_TRIAL_PHASE,
     TargetNodeField.TARGET_TISSUE_SPECIFICITY,
     TargetNodeField.TARGET_TISSUE_DISTRIBUTION,
+    TargetNodeField.TARGET_TISSUES,
     # mandatory disease fields
     DiseaseNodeField.DISEASE_ACCESSION,
     # optional disease fields
@@ -88,6 +89,7 @@ node_fields = [
     DrugNodeField.DRUG_LINKED_TARGETS,
     DrugNodeField.DRUG_DESCRIPTION,
     DrugNodeField.DRUG_INDICATION_COUNT_IN_DISEASE,
+    DrugNodeField.DRUG_REACTIONS,
     # mandatory hpo fields
     HPONodeField.HPO_ACCESSION,
     # optional hpo fields

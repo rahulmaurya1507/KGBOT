@@ -54,6 +54,8 @@ class NodeGenerator:
             if node_field_type == DiseaseNodeField:
                 label = row['id']
                 _type = re.match(r'^[A-Za-z]+', label).group().lower() + '.disease'
+            # if node_field_type == TargetNodeField and row[]:
+                
 
             if not _id:
                 continue

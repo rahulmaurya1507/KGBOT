@@ -114,6 +114,8 @@ class TargetNodeField(Enum):
     TARGET_TISSUE_SPECIFICITY = 'tissueSpecificity'
     TARGET_TISSUE_DISTRIBUTION = 'tissueDistribution'
 
+    TARGET_TISSUES = 'tissues'
+
 
 class DiseaseNodeField(Enum):
     """
@@ -169,7 +171,7 @@ class DrugNodeField(Enum):
     DRUG_LINKED_TARGETS = "linkedTargets"
     DRUG_DESCRIPTION = "description"
     DRUG_INDICATION_COUNT_IN_DISEASE = 'IndicationCountInDisease'
-
+    DRUG_REACTIONS = 'reactions'
 
 class HPONodeField(Enum):
     """

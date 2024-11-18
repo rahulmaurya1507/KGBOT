@@ -27,6 +27,7 @@ human gene:
     maxClinicalTrialPhase : double
     tissueSpecificity : double
     tissueDistribution : double
+    tissues: str[]
 
 # otar has no Bioregistry entry
 disease:
@@ -62,6 +63,7 @@ drug:
     linkedTargets: str
     description: str
     IndicationCountInDisease: int
+    reactions: str[]
 
 human phenotype ontology:
   is_a: phenotypic feature
