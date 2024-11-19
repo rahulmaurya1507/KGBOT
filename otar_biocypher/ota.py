@@ -41,7 +41,7 @@ class TargetDiseaseEvidenceAdapter:
             raise ValueError("DrugNodeField.DRUG_ACCESSION must be provided")
 
         if self.test_size:
-            logger.warning("Open Targets adapter: Test mode is enabled. Only processing {self.test_size} rows.")
+            logger.warning(f"Open Targets adapter: Test mode is enabled. Only processing {self.test_size} rows.")
 
         # Initialize DataLoader
         self.dl = DataLoader(
@@ -69,7 +69,8 @@ class TargetDiseaseEvidenceAdapter:
             self.dl.dmoa_df,
             self.dl.indications_df,
             self.dl.molecular_interactions_df,
-            self.dl.disease2phenotype_df
+            self.dl.disease2phenotype_df,
+            self.dl.interaction_evidence_df
         )
 
 
@@ -106,3 +107,6 @@ class TargetDiseaseEvidenceAdapter:
     
     def get_disease2phenotype_edges(self):
         return self.edge_generator.get_disease2phenotype_edges()
+    
+    def get_interaction_evidence_edges(self):
+        return self.edge_generator.get_interaction_evidence_edges()

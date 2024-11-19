@@ -17,7 +17,8 @@ class EdgeGenerator:
             dmoa_df,
             indications_df,
             molecular_interactions_df,
-            disease2phenotype_df
+            disease2phenotype_df,
+            interaction_evidence_df
     ):
         self.abo_df = abo_df
         self.abodid_df = abodid_df
@@ -29,6 +30,7 @@ class EdgeGenerator:
         self.indications_df = indications_df
         self.molecular_interactions_df = molecular_interactions_df
         self.disease2phenotype_df = disease2phenotype_df
+        self.interaction_evidence_df = interaction_evidence_df
 
     def encoding(self, row):
         return hashlib.md5(str(row).encode()).hexdigest()
@@ -240,5 +242,54 @@ class EdgeGenerator:
                 disease_id,
                 phenotype_id,
                 'disease_phenotype',
+                properties
+            )
+
+    def get_interaction_evidence_edges(self):
+        for row in tqdm(self.interaction_evidence_df.collect()):
+            edge_id = self.encoding(row)
+            src_id, _ = _process_id_and_type(row['targetA'], "ensembl")
+            tar_id, _ = _process_id_and_type(row['targetB'], "ensembl")
+            
+            # participantDetectionMethodA = [item.asDict() for item in row['participantDetectionMethodA']] if row['participantDetectionMethodA'] else []
+            # participantDetectionMethodA = list(map(str, participantDetectionMethodA))
+
+            # participantDetectionMethodB = [item.asDict() for item in row['participantDetectionMethodB']]  if row['participantDetectionMethodB'] else []
+            # participantDetectionMethodB = list(map(str, participantDetectionMethodB))
+
+            properties = {
+                'hostOrganismTissue': row['hostOrganismTissue'].asDict() if row['hostOrganismTissue'] else {},
+                'evidenceScore': row['evidenceScore'],
+                'intBBiologicalRole': row['intBBiologicalRole'],
+                'interactionResources': row['interactionResources'].asDict() if row['interactionResources'] else {},
+                'interactionTypeMiIdentifier': row['interactionTypeMiIdentifier'],
+                'interactionDetectionMethodShortName': row['interactionDetectionMethodShortName'],
+                'intA': row['intA'],
+                'intBSource': row['intBSource'],
+                'speciesB': row['speciesB'].asDict(),
+                'interactionIdentifier': row['interactionIdentifier'],
+                'hostOrganismTaxId': row['hostOrganismTaxId'],
+                'participantDetectionMethodA': row['participantDetectionMethodA'],
+                'expansionMethodShortName': row['expansionMethodShortName'],
+                'speciesA': row['speciesA'].asDict() if row['speciesA'] else {},
+                'intASource': row['intASource'],
+                'intB': row['intB'],
+                'pubmedId': row['pubmedId'],
+                'intABiologicalRole': row['intABiologicalRole'],
+                'hostOrganismScientificName': row['hostOrganismScientificName'],
+                'interactionScore': row['interactionScore'],
+                'interactionTypeShortName': row['interactionTypeShortName'],
+                'expansionMethodMiIdentifier': row['expansionMethodMiIdentifier'],
+                'participantDetectionMethodB': row['participantDetectionMethodB'],
+                'interactionDetectionMethodMiIdentifier': row['interactionDetectionMethodMiIdentifier'],
+                'source': 'source',
+                'licence': 'licence'
+            }
+
+            yield (
+                edge_id,
+                src_id,
+                tar_id,
+                'evidence_molecular_interactions',
                 properties
             )

@@ -204,6 +204,35 @@ gene pairwise molecular interations:
     count: int
     scoring: float
 
+evidence of molecular interactions:
+  is_a: gene to gene association
+  represented_as: edge
+  preferred_id: gene_interactions
+  input_label: evidence_molecular_interactions
+  interactionTypeMiIdentifier: str
+  evidenceScore: double
+  participantDetectionMethodA: str[]
+  intBBiologicalRole: str
+  interactionResources: str
+  interactionTypeShortName: str
+  interactionDetectionMethodShortName: str
+  intA: str
+  intBSource: str
+  speciesB: str[]
+  interactionIdentifier: str
+  hostOrganismTaxId: long
+  expansionMethodShortName: str
+  speciesA: str[]
+  intASource: str
+  intB: str
+  pubmedId: str
+  intABiologicalRole: str
+  expansionMethodMiIdentifier: str
+  interactionScore: double
+  participantDetectionMethodB: str[]
+  hostOrganismScientificName: str
+  interactionDetectionMethodMiIdentifier: str
+
 
 drug mechanism of action:
   is_a: drug to gene association

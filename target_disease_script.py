@@ -21,7 +21,7 @@ def main():
     target_disease_adapter = TargetDiseaseEvidenceAdapter(
         datasets=target_disease_datasets,
         node_fields=node_fields,
-        test_size=2000
+        test_size=20000
     )
 
     # Start BioCypher
@@ -32,7 +32,7 @@ def main():
     # Check the schema
     # bc.show_ontology_structure()
 
-    # # Write nodes
+    # Write nodes
     bc.write_nodes(target_disease_adapter.get_nodes())
 
     bc.write_edges(target_disease_adapter.get_abo_edges())
@@ -53,6 +53,8 @@ def main():
 
 
     bc.write_edges(target_disease_adapter.get_disease2phenotype_edges())
+
+    bc.write_edges(target_disease_adapter.get_interaction_evidence_edges())
 
     # # Post import functions
     bc.write_import_call()
