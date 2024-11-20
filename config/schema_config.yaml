@@ -265,3 +265,6 @@ disease to phenotype:
   represented_as: edge
   properties:
     evidence: str[]
+
+# drug warnings:
+#   is_a: drug to entity association mixin

@@ -73,6 +73,9 @@ class TargetDiseaseEvidenceAdapter:
             self.dl.interaction_evidence_df
         )
 
+    def get_edge_batches(self, df):
+        return self.edge_generator.get_edge_batches(df)
+
 
     def get_nodes(self):
         return self.node_generator.get_nodes()

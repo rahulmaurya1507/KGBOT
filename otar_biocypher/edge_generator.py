@@ -1,6 +1,9 @@
-import time
 import hashlib
 from tqdm import tqdm
+
+from biocypher._logger import logger
+
+from pyspark.sql import DataFrame, functions as F
 
 from .id_utils import _process_id_and_type, _find_licence
 
@@ -34,10 +37,58 @@ class EdgeGenerator:
 
     def encoding(self, row):
         return hashlib.md5(str(row).encode()).hexdigest()
+    
+    def get_edge_batches(self, df: DataFrame) -> DataFrame:
+        """
+        Adds partition number to the evidence dataframe and returns the data
+        frame.
 
-    def get_abo_edges(self):
-        self.abo_df.collect()
-        for row in tqdm(self.abo_df.collect()):
+        Args:
+
+            df: The evidence dataframe.
+
+        Returns:
+
+            The evidence dataframe with a new column "partition_num" containing
+            the partition number.
+        """
+
+        logger.info("Generating batches.")
+
+        # add partition number to self.df as column
+        df = df.withColumn("partition_num", F.spark_partition_id())
+        df.persist()
+
+        self.current_batches = [
+            int(row.partition_num)
+            for row in df.select("partition_num").distinct().collect()
+        ]
+        logger.info(f"Generated {len(self.current_batches)} batches.")
+
+        return df
+
+    def get_abo_edges(self, batch_number):
+        # Check if df has column partition_num
+        if "partition_num" not in self.abo_df.columns:
+            raise ValueError(
+                "df does not have column partition_num. "
+                "Please run get_edge_batches() first."
+            )
+
+        logger.info("Generating Gene -> Disease Overall edges.")
+
+        logger.info(
+            f"Processing batch {batch_number+1} of {len(self.current_batches)}."
+        )
+
+        yield from self._process_abo_edges(
+            self.abo_df.where(self.abo_df.partition_num == batch_number)
+        )
+
+    def _process_abo_edges(self, batch: DataFrame):
+        rows = batch.collect()
+
+        for row in tqdm(rows):
             edge_id = self.encoding(row)
 
             disease_id, _ = _process_id_and_type(row['diseaseId'])
@@ -57,8 +108,33 @@ class EdgeGenerator:
                 properties
             )
     
-    def get_abodid_edges(self):
-        for row in tqdm(self.abodid_df.collect()):
+    def get_abodid_edges(self, batch_number):
+        # Check if df has column partition_num
+        if "partition_num" not in self.abodid_df.columns:
+            raise ValueError(
+                "df does not have column partition_num. "
+                "Please run get_edge_batches() first."
+            )
+
+        logger.info("Generating Gene -> Disease Overall direct indirect edges.")
+
+        logger.info(
+            f"Processing batch {batch_number+1} of {len(self.current_batches)}."
+        )
+
+        yield from self._process_abodid_edges(
+            self.abodid_df.where(self.abodid_df.partition_num == batch_number)
+        )
+    
+    def _process_abodid_edges(self, batch: DataFrame):
+        """
+        Process one batch of Gene -> Disease Overall edges.
+
+        Args:
+            batch: Spark DataFrame containing the edges of one batch.
+        """
+        rows = batch.collect()
+        for row in tqdm(rows):
             edge_id = self.encoding(row)
 
             disease_id, _ = _process_id_and_type(row['diseaseId'])
@@ -78,8 +154,29 @@ class EdgeGenerator:
                 properties
             )
 
-    def get_abds_edges(self):
-        for row in tqdm(self.abds_df.collect()):
+
+    def get_abds_edges(self, batch_number):
+        # Check if df has column partition_num
+        if "partition_num" not in self.abds_df.columns:
+            raise ValueError(
+                "df does not have column partition_num. "
+                "Please run get_edge_batches() first."
+            )
+
+        logger.info("Generating Gene -> Disease datasource edges.")
+
+        logger.info(
+            f"Processing batch {batch_number+1} of {len(self.current_batches)}."
+        )
+
+        yield from self._process_abds_edges(
+            self.abds_df.where(self.abds_df.partition_num == batch_number)
+        )
+
+
+    def _process_abds_edges(self, batch: DataFrame):
+        rows = batch.collect()
+        for row in tqdm(rows):
             edge_id = self.encoding(row)
             disease_id, _ = _process_id_and_type(row['diseaseId'])
             gene_id, _ = _process_id_and_type(row['targetId'], "ensembl")
@@ -96,8 +193,27 @@ class EdgeGenerator:
                 }
             )
 
-    def get_abdsdid_edges(self):
-        for row in self.abdsdid_df.collect():
+    def get_abdsdid_edges(self, batch_number):
+        # Check if df has column partition_num
+        if "partition_num" not in self.abdsdid_df.columns:
+            raise ValueError(
+                "df does not have column partition_num. "
+                "Please run get_edge_batches() first."
+            )
+
+        logger.info("Generating Gene -> Disease datasource direct indirect edges.")
+
+        logger.info(
+            f"Processing batch {batch_number+1} of {len(self.current_batches)}."
+        )
+
+        yield from self._process_abdsid_edges(
+            self.abdsdid_df.where(self.abdsdid_df.partition_num == batch_number)
+        )
+
+    def _process_abdsid_edges(self, batch: DataFrame):
+        rows = batch.collect()
+        for row in tqdm(rows):
             edge_id = self.encoding(row)
             disease_id, _ = _process_id_and_type(row['diseaseId'])
             gene_id, _ = _process_id_and_type(row['targetId'], "ensembl")
@@ -116,8 +232,27 @@ class EdgeGenerator:
             )
 
  
-    def get_abdt_edges(self):
-        for row in tqdm(self.abdt_df.collect()):
+    def get_abdt_edges(self, batch_number):
+        # Check if df has column partition_num
+        if "partition_num" not in self.abdt_df.columns:
+            raise ValueError(
+                "df does not have column partition_num. "
+                "Please run get_edge_batches() first."
+            )
+
+        logger.info("Generating Gene -> Disease datatype edges.")
+
+        logger.info(
+            f"Processing batch {batch_number+1} of {len(self.current_batches)}."
+        )
+
+        yield from self._process_abdt_edges(
+            self.abdt_df.where(self.abdt_df.partition_num == batch_number)
+        )
+
+    def _process_abdt_edges(self, batch: DataFrame):
+        rows = batch.collect()
+        for row in tqdm(rows):
             edge_id = self.encoding(row)
             disease_id, _ = _process_id_and_type(row['diseaseId'])
             gene_id, _ = _process_id_and_type(row['targetId'], "ensembl")
@@ -133,8 +268,28 @@ class EdgeGenerator:
             }
             )
 
-    def get_abdtdid_edges(self):
-        for row in tqdm(self.abdtdid_df.collect()):
+
+    def get_abdtdid_edges(self, batch_number):
+        # Check if df has column partition_num
+        if "partition_num" not in self.abdtdid_df.columns:
+            raise ValueError(
+                "df does not have column partition_num. "
+                "Please run get_edge_batches() first."
+            )
+
+        logger.info("Generating Gene -> Disease datatype direct indirect edges.")
+
+        logger.info(
+            f"Processing batch {batch_number+1} of {len(self.current_batches)}."
+        )
+
+        yield from self._process_abdtdid_edges(
+            self.abdtdid_df.where(self.abdtdid_df.partition_num == batch_number)
+        )
+
+    def _process_abdtdid_edges(self, batch: DataFrame):
+        rows = batch.collect()
+        for row in tqdm(rows):
             edge_id = self.encoding(row)
             disease_id, _ = _process_id_and_type(row['diseaseId'])
             gene_id, _ = _process_id_and_type(row['targetId'], "ensembl")
@@ -151,8 +306,27 @@ class EdgeGenerator:
                 }
             )
     
-    def get_dmoa_edges(self):
-        for row in tqdm(self.dmoa_df.collect()):
+    def get_dmoa_edges(self, batch_number):
+        # Check if df has column partition_num
+        if "partition_num" not in self.dmoa_df.columns:
+            raise ValueError(
+                "df does not have column partition_num. "
+                "Please run get_edge_batches() first."
+            )
+
+        logger.info("Generating drug mechanism of action edges.")
+
+        logger.info(
+            f"Processing batch {batch_number+1} of {len(self.current_batches)}."
+        )
+
+        yield from self._process_dmoa_edges(
+            self.dmoa_df.where(self.dmoa_df.partition_num == batch_number)
+        )
+
+    def _process_dmoa_edges(self, batch: DataFrame):
+        rows = batch.collect()
+        for row in tqdm(rows):
             edge_id = self.encoding(row)
             drug_id, _ = _process_id_and_type(row['chemblIds'], 'chembl')
             gene_id, _ = _process_id_and_type(row['targets'], "ensembl")
@@ -169,8 +343,28 @@ class EdgeGenerator:
 
             yield edge_id, gene_id, drug_id, 'dmoa', properties
     
-    def get_indication_edges(self):
-        for row in tqdm(self.indications_df.collect()):
+
+    def get_indication_edges(self, batch_number):
+        # Check if df has column partition_num
+        if "partition_num" not in self.indications_df.columns:
+            raise ValueError(
+                "df does not have column partition_num. "
+                "Please run get_edge_batches() first."
+            )
+
+        logger.info("Generating drug indication edges.")
+
+        logger.info(
+            f"Processing batch {batch_number+1} of {len(self.current_batches)}."
+        )
+
+        yield from self._process_indication_edges(
+            self.indications_df.where(self.indications_df.partition_num == batch_number)
+        )
+
+    def _process_indication_edges(self, batch: DataFrame):
+        rows = batch.collect()
+        for row in tqdm(rows):
             edge_id = self.encoding(row)
             drug_id, _ = _process_id_and_type(row['id'], 'chembl')
             disease_id, _ = _process_id_and_type(row['disease'])
@@ -195,35 +389,73 @@ class EdgeGenerator:
                 properties
             )
 
-    def get_molecular_interactions_edges(self):
-        for row in tqdm(self.molecular_interactions_df.collect()):
-            edge_id = self.encoding(row)
-            src_gene_id, _ = _process_id_and_type(row['targetA'], "ensembl")
-            tar_gene_id, _ = _process_id_and_type(row['targetB'], "ensembl")
-            properties = {
-                'sourceDatabase': row['sourceDatabase'],
-                'intA': row['intA'],
-                'intABiologicalRole': row['intABiologicalRole'],
-                'intB': row['intB'],
-                'intBBiologicalRole': row['intBBiologicalRole'],
-                'speciesA': row['speciesA'].asDict(),
-                'speciesB': row['speciesB'].asDict(),
-                'count': row['count'],
-                'scoring': row['scoring'],
-                'source': 'source',
-                'licence': 'licence'
-            }
-
-            yield (
-                edge_id,
-                src_gene_id,
-                tar_gene_id,
-                'molecular_interactions',
-                properties
+    def get_molecular_interactions_edges(self, batch_number):
+        # Check if df has column partition_num
+        if "partition_num" not in self.molecular_interactions_df.columns:
+            raise ValueError(
+                "df does not have column partition_num. "
+                "Please run get_edge_batches() first."
             )
+
+        logger.info("Generating molecular indications edges.")
+
+        logger.info(
+            f"Processing batch {batch_number+1} of {len(self.current_batches)}."
+        )
+
+        yield from self._process_moleculer_interations_edges(
+            self.molecular_interactions_df.where(self.molecular_interactions_df.partition_num == batch_number)
+        )
+            
+    def _process_moleculer_interations_edges(self, batch: DataFrame):
+        rows = batch.collect()
+        for row in tqdm(rows):
+                edge_id = self.encoding(row)
+                src_gene_id, _ = _process_id_and_type(row['targetA'], "ensembl")
+                tar_gene_id, _ = _process_id_and_type(row['targetB'], "ensembl")
+                properties = {
+                    'sourceDatabase': row['sourceDatabase'],
+                    'intA': row['intA'],
+                    'intABiologicalRole': row['intABiologicalRole'],
+                    'intB': row['intB'],
+                    'intBBiologicalRole': row['intBBiologicalRole'],
+                    'speciesA': row['speciesA'].asDict(),
+                    'speciesB': row['speciesB'].asDict(),
+                    'count': row['count'],
+                    'scoring': row['scoring'],
+                    'source': 'source',
+                    'licence': 'licence'
+                }
+
+                yield (
+                    edge_id,
+                    src_gene_id,
+                    tar_gene_id,
+                    'molecular_interactions',
+                    properties
+                )
     
-    def get_disease2phenotype_edges(self):
-        for row in tqdm(self.disease2phenotype_df.collect()):
+    def get_disease2phenotype_edges(self, batch_number):
+        # Check if df has column partition_num
+        if "partition_num" not in self.disease2phenotype_df.columns:
+            raise ValueError(
+                "df does not have column partition_num. "
+                "Please run get_edge_batches() first."
+            )
+
+        logger.info("Generating disease to phenotype edges.")
+
+        logger.info(
+            f"Processing batch {batch_number+1} of {len(self.current_batches)}."
+        )
+
+        yield from self._process_disease2phenotype_edges(
+            self.disease2phenotype_df.where(self.disease2phenotype_df.partition_num == batch_number)
+        )
+
+    def _process_disease2phenotype_edges(self, batch: DataFrame):
+        rows = batch.collect()
+        for row in tqdm(rows):
             edge_id = self.encoding(row)
             disease_id, _ = _process_id_and_type(row['disease'])
             phenotype_id, _ = _process_id_and_type(row['phenotype'])
@@ -245,18 +477,31 @@ class EdgeGenerator:
                 properties
             )
 
-    def get_interaction_evidence_edges(self):
-        for row in tqdm(self.interaction_evidence_df.collect()):
+    def get_interaction_evidence_edges(self, batch_number):
+        # Check if df has column partition_num
+        if "partition_num" not in self.interaction_evidence_df.columns:
+            raise ValueError(
+                "df does not have column partition_num. "
+                "Please run get_edge_batches() first."
+            )
+
+        logger.info("Generating interaction evidence edges.")
+
+        logger.info(
+            f"Processing batch {batch_number+1} of {len(self.current_batches)}."
+        )
+
+        yield from self._process_interation_evidence_edges(
+            self.interaction_evidence_df.where(self.interaction_evidence_df.partition_num == batch_number)
+        )
+
+    def _process_interation_evidence_edges(self, batch: DataFrame):
+        rows = batch.collect()
+        for row in tqdm(rows):
             edge_id = self.encoding(row)
             src_id, _ = _process_id_and_type(row['targetA'], "ensembl")
             tar_id, _ = _process_id_and_type(row['targetB'], "ensembl")
             
-            # participantDetectionMethodA = [item.asDict() for item in row['participantDetectionMethodA']] if row['participantDetectionMethodA'] else []
-            # participantDetectionMethodA = list(map(str, participantDetectionMethodA))
-
-            # participantDetectionMethodB = [item.asDict() for item in row['participantDetectionMethodB']]  if row['participantDetectionMethodB'] else []
-            # participantDetectionMethodB = list(map(str, participantDetectionMethodB))
-
             properties = {
                 'hostOrganismTissue': row['hostOrganismTissue'].asDict() if row['hostOrganismTissue'] else {},
                 'evidenceScore': row['evidenceScore'],
