@@ -25,7 +25,7 @@ comm==0.2.2
 contourpy==1.2.1
 coverage==7.6.0
 coverage-badge==1.1.1
-cryptography==42.0.8
+cryptography>=43.0.1
 curies==0.7.10
 cycler==0.12.1
 debugpy==1.8.2
@@ -107,7 +107,7 @@ pyarrow==16.1.0
 pycodestyle==2.12.0
 pycparser==2.22
 pycurl==7.45.3
-pydantic==1.10.2
+pydantic>=1.10.13
 pydantic_core==2.20.1
 pyflakes==3.2.0
 Pygments==2.18.0
