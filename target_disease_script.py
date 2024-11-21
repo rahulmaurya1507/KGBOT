@@ -23,7 +23,7 @@ def main():
     target_disease_adapter = TargetDiseaseEvidenceAdapter(
         datasets=target_disease_datasets,
         node_fields=node_fields,
-        test_size=False
+        test_size=2000
     )
 
     # Start BioCypher

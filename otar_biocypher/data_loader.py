@@ -1,4 +1,3 @@
-import pandas as pd
 from biocypher._logger import logger
 
 from .spark_session import spark
