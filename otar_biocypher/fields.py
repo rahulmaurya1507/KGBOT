@@ -9,7 +9,8 @@ from .ota import (
     DiseaseNodeField,
     DrugNodeField,
     HPONodeField,
-    ReactomeNodeField
+    ReactomeNodeField,
+    GeneOntologyNodeField
 )
 
 
@@ -108,4 +109,8 @@ node_fields = [
     ReactomeNodeField.REACTOME_DESCENDANTS,
     ReactomeNodeField.REACTOME_CHILDREN,
     ReactomeNodeField.REACTOME_PARENT,
+    # mandatory go fields
+    GeneOntologyNodeField.GENE_ONTOLOGY_ACCESSION,
+    # optional go fields
+    GeneOntologyNodeField.GENE_ONTOLOGY_NAME,
 ]

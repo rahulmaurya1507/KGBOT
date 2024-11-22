@@ -205,3 +205,16 @@ class ReactomeNodeField(Enum):
     REACTOME_CHILDREN = 'children'
     REACTOME_PARENT = 'parents'
     REACTOME_PATH = 'path'
+
+class GeneOntologyNodeField(Enum):
+    """
+    Enum of all the fields in the gene ontology dataset. Values are the
+    spellings used in the Open Targets parquet files.
+    """
+
+    # mandatory fields
+    GENE_ONTOLOGY_ACCESSION = "id"
+    _PRIMARY_ID = GENE_ONTOLOGY_ACCESSION
+
+    # optional fields
+    GENE_ONTOLOGY_NAME = "name"

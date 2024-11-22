@@ -92,6 +92,14 @@ reactome:
     parents: str[]
     path: str[]
 
+go term:
+  is_a: biological entity # activity, process, or location
+  represented_as: node
+  preferred_id: go
+  input_label: go
+  properties:
+    name: str
+
 
 association by overall:
   is_a: gene to disease association

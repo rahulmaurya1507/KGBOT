@@ -37,7 +37,7 @@ def main():
     # Write nodes
     bc.write_nodes(target_disease_adapter.get_nodes())
 
- # Updated code for processing edges in batches
+    # Updated code for processing edges in batches
 
     # ABO edges
     target_disease_adapter.edge_generator.abo_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.abo_df)

@@ -16,7 +16,8 @@ class TargetDiseaseEvidenceAdapter:
                 DiseaseNodeField,
                 DrugNodeField,
                 HPONodeField,
-                ReactomeNodeField
+                ReactomeNodeField,
+                GeneOntologyNodeField
             ],
             test_size: int = None
             
@@ -37,8 +38,11 @@ class TargetDiseaseEvidenceAdapter:
         if not DiseaseNodeField.DISEASE_ACCESSION in self.node_fields:
             raise ValueError("DiseaseNodeField.DISEASE_ACCESSION must be provided")
         
-        if not DrugNodeField.DRUG_ACCESSION in self.node_fields:    
+        if not DrugNodeField.DRUG_ACCESSION in self.node_fields:        
             raise ValueError("DrugNodeField.DRUG_ACCESSION must be provided")
+        
+        if not GeneOntologyNodeField.GENE_ONTOLOGY_ACCESSION in self.node_fields:
+            raise ValueError("GeneOntologyNodeField.GENE_ONTOLOGY_ACCESSION must be provided")
 
         if self.test_size:
             logger.warning(f"Open Targets adapter: Test mode is enabled. Only processing {self.test_size} rows.")
@@ -55,6 +59,7 @@ class TargetDiseaseEvidenceAdapter:
             self.dl.drug_df,
             self.dl.hpo_df,
             self.dl.reactome_df,
+            self.dl.go_df,
             self.node_fields,
         )
 
@@ -75,7 +80,6 @@ class TargetDiseaseEvidenceAdapter:
 
     def get_edge_batches(self, df):
         return self.edge_generator.get_edge_batches(df)
-
 
     def get_nodes(self):
         return self.node_generator.get_nodes()
