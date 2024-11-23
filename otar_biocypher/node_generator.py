@@ -105,6 +105,3 @@ class NodeGenerator:
         yield from self._yield_node_type(
             self.go_df, GeneOntologyNodeField, 'go'
         )
-
-
-  

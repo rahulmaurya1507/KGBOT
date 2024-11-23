@@ -276,3 +276,13 @@ disease to phenotype:
 
 # drug warnings:
 #   is_a: drug to entity association mixin
+
+gene to go term association:
+  is_a: association
+  represented_as: edge
+  source: gene
+  target: go term
+  input_label: GENE_TO_GO_TERM_ASSOCIATION
+  properties:
+    goEvidence: str
+    goSource: str

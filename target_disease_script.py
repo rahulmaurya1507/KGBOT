@@ -39,61 +39,65 @@ def main():
 
     # Updated code for processing edges in batches
 
-    # ABO edges
-    target_disease_adapter.edge_generator.abo_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.abo_df)
-    for batch in target_disease_adapter.edge_generator.current_batches:
-        bc.write_edges(target_disease_adapter.edge_generator.get_abo_edges(batch_number=batch))
+    # # ABO edges
+    # target_disease_adapter.edge_generator.abo_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.abo_df)
+    # for batch in target_disease_adapter.edge_generator.current_batches:
+    #     bc.write_edges(target_disease_adapter.edge_generator.get_abo_edges(batch_number=batch))
 
-    # ABODID edges
-    target_disease_adapter.edge_generator.abodid_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.abodid_df)
-    for batch in target_disease_adapter.edge_generator.current_batches:
-        bc.write_edges(target_disease_adapter.edge_generator.get_abodid_edges(batch_number=batch))
+    # # ABODID edges
+    # target_disease_adapter.edge_generator.abodid_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.abodid_df)
+    # for batch in target_disease_adapter.edge_generator.current_batches:
+    #     bc.write_edges(target_disease_adapter.edge_generator.get_abodid_edges(batch_number=batch))
 
-    # ABDS edges
-    target_disease_adapter.edge_generator.abds_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.abds_df)
-    for batch in target_disease_adapter.edge_generator.current_batches:
-        bc.write_edges(target_disease_adapter.edge_generator.get_abds_edges(batch_number=batch))
+    # # ABDS edges
+    # target_disease_adapter.edge_generator.abds_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.abds_df)
+    # for batch in target_disease_adapter.edge_generator.current_batches:
+    #     bc.write_edges(target_disease_adapter.edge_generator.get_abds_edges(batch_number=batch))
 
-    # ABDSDID edges
-    target_disease_adapter.edge_generator.abdsdid_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.abdsdid_df)
-    for batch in target_disease_adapter.edge_generator.current_batches:
-        bc.write_edges(target_disease_adapter.edge_generator.get_abdsdid_edges(batch_number=batch))
+    # # ABDSDID edges
+    # target_disease_adapter.edge_generator.abdsdid_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.abdsdid_df)
+    # for batch in target_disease_adapter.edge_generator.current_batches:
+    #     bc.write_edges(target_disease_adapter.edge_generator.get_abdsdid_edges(batch_number=batch))
 
-    # ABDT edges
-    target_disease_adapter.edge_generator.abdt_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.abdt_df)
-    for batch in target_disease_adapter.edge_generator.current_batches:
-        bc.write_edges(target_disease_adapter.edge_generator.get_abdt_edges(batch_number=batch))
+    # # ABDT edges
+    # target_disease_adapter.edge_generator.abdt_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.abdt_df)
+    # for batch in target_disease_adapter.edge_generator.current_batches:
+    #     bc.write_edges(target_disease_adapter.edge_generator.get_abdt_edges(batch_number=batch))
 
-    # ABDTDID edges
-    target_disease_adapter.edge_generator.abdtdid_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.abdtdid_df)
-    for batch in target_disease_adapter.edge_generator.current_batches:
-        bc.write_edges(target_disease_adapter.edge_generator.get_abdtdid_edges(batch_number=batch))
+    # # ABDTDID edges
+    # target_disease_adapter.edge_generator.abdtdid_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.abdtdid_df)
+    # for batch in target_disease_adapter.edge_generator.current_batches:
+    #     bc.write_edges(target_disease_adapter.edge_generator.get_abdtdid_edges(batch_number=batch))
 
-    # Molecular Interactions edges
-    target_disease_adapter.edge_generator.molecular_interactions_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.molecular_interactions_df)
-    for batch in target_disease_adapter.edge_generator.current_batches:
-        bc.write_edges(target_disease_adapter.edge_generator.get_molecular_interactions_edges(batch_number=batch))
+    # # Molecular Interactions edges
+    # target_disease_adapter.edge_generator.molecular_interactions_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.molecular_interactions_df)
+    # for batch in target_disease_adapter.edge_generator.current_batches:
+    #     bc.write_edges(target_disease_adapter.edge_generator.get_molecular_interactions_edges(batch_number=batch))
 
-    # DMOA edges
-    target_disease_adapter.edge_generator.dmoa_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.dmoa_df)
-    for batch in target_disease_adapter.edge_generator.current_batches:
-        bc.write_edges(target_disease_adapter.edge_generator.get_dmoa_edges(batch_number=batch))
+    # # DMOA edges
+    # target_disease_adapter.edge_generator.dmoa_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.dmoa_df)
+    # for batch in target_disease_adapter.edge_generator.current_batches:
+    #     bc.write_edges(target_disease_adapter.edge_generator.get_dmoa_edges(batch_number=batch))
 
-    # Indication edges
-    target_disease_adapter.edge_generator.indications_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.indications_df)
-    for batch in target_disease_adapter.edge_generator.current_batches:
-        bc.write_edges(target_disease_adapter.edge_generator.get_indication_edges(batch_number=batch))
+    # # Indication edges
+    # target_disease_adapter.edge_generator.indications_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.indications_df)
+    # for batch in target_disease_adapter.edge_generator.current_batches:
+    #     bc.write_edges(target_disease_adapter.edge_generator.get_indication_edges(batch_number=batch))
 
-    # Disease-to-Phenotype edges
-    target_disease_adapter.edge_generator.disease2phenotype_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.disease2phenotype_df)
-    for batch in target_disease_adapter.edge_generator.current_batches:
-        bc.write_edges(target_disease_adapter.edge_generator.get_disease2phenotype_edges(batch_number=batch))
+    # # Disease-to-Phenotype edges
+    # target_disease_adapter.edge_generator.disease2phenotype_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.disease2phenotype_df)
+    # for batch in target_disease_adapter.edge_generator.current_batches:
+    #     bc.write_edges(target_disease_adapter.edge_generator.get_disease2phenotype_edges(batch_number=batch))
 
-    # Interaction Evidence edges
-    target_disease_adapter.edge_generator.interaction_evidence_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.interaction_evidence_df)
-    for batch in target_disease_adapter.edge_generator.current_batches:
-        bc.write_edges(target_disease_adapter.edge_generator.get_interaction_evidence_edges(batch_number=batch))
+    # # Interaction Evidence edges
+    # target_disease_adapter.edge_generator.interaction_evidence_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.interaction_evidence_df)
+    # for batch in target_disease_adapter.edge_generator.current_batches:
+    #     bc.write_edges(target_disease_adapter.edge_generator.get_interaction_evidence_edges(batch_number=batch))
 
+    # GO edges
+    target_disease_adapter.edge_generator.targets_go_df = target_disease_adapter.get_edge_batches(target_disease_adapter.edge_generator.targets_go_df)
+    for batch in target_disease_adapter.edge_generator.current_batches:
+        bc.write_edges(target_disease_adapter.edge_generator.get_targets_go_edges(batch_number=batch))
 
     # Post import functions
     bc.write_import_call()

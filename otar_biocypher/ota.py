@@ -75,7 +75,8 @@ class TargetDiseaseEvidenceAdapter:
             self.dl.indications_df,
             self.dl.molecular_interactions_df,
             self.dl.disease2phenotype_df,
-            self.dl.interaction_evidence_df
+            self.dl.interaction_evidence_df,
+            self.dl.targets_go_df
         )
 
     def get_edge_batches(self, df):

@@ -79,6 +79,9 @@ class DataLoader:
 
         interaction_evidence_path = f"{self.base_path}/interactionEvidence"
         self.interaction_evidence_df = spark.read.parquet(interaction_evidence_path)
+
+        targets_go = f"{self.base_path}/targets_go"
+        self.targets_go_df = spark.read.parquet(targets_go)
         
         logger.info('Data Loading Completed!!!')
 
@@ -104,3 +107,4 @@ class DataLoader:
             self.indications_df = self.indications_df.limit(self.test_size)
             self.disease2phenotype_df = self.disease2phenotype_df.limit(self.test_size)
             self.interaction_evidence_df = self.interaction_evidence_df.limit(self.test_size)
+            self.targets_go_df = self.targets_go_df.limit(self.test_size)

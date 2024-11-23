@@ -21,7 +21,8 @@ class EdgeGenerator:
             indications_df,
             molecular_interactions_df,
             disease2phenotype_df,
-            interaction_evidence_df
+            interaction_evidence_df,
+            targets_go_df
     ):
         self.abo_df = abo_df
         self.abodid_df = abodid_df
@@ -34,6 +35,7 @@ class EdgeGenerator:
         self.molecular_interactions_df = molecular_interactions_df
         self.disease2phenotype_df = disease2phenotype_df
         self.interaction_evidence_df = interaction_evidence_df
+        self.targets_go_df = targets_go_df
 
     def encoding(self, row):
         return hashlib.md5(str(row).encode()).hexdigest()
@@ -536,5 +538,46 @@ class EdgeGenerator:
                 src_id,
                 tar_id,
                 'evidence_molecular_interactions',
+                properties
+            )
+
+    def get_targets_go_edges(self, batch_number):
+            # Check if df has column partition_num
+            if "partition_num" not in self.targets_go_df.columns:
+                raise ValueError(
+                    "df does not have column partition_num. "
+                    "Please run get_edge_batches() first."
+                )
+
+            logger.info("Generating target to go edges.")
+
+            logger.info(
+                f"Processing batch {batch_number+1} of {len(self.current_batches)}."
+            )
+
+            yield from self._process_targets_go_edges(
+                self.targets_go_df.where(self.targets_go_df.partition_num == batch_number)
+            )
+
+    def _process_targets_go_edges(self, batch: DataFrame):
+        rows = batch.collect()
+        for row in tqdm(rows):
+            edge_id = self.encoding(row)
+            go_id, _ = _process_id_and_type(row['goId'], 'go')
+            gene_id, _ = _process_id_and_type(row['ensemblId'], 'ensembl')
+
+
+            properties = {
+                'evidence': row['goEvidence'],
+                'source': row['goSource'],
+                'licence': 'licence',
+                'version': '22.11'
+            }
+
+            yield (
+                edge_id,
+                gene_id,
+                go_id,
+                'GENE_TO_GO_TERM_ASSOCIATION',
                 properties
             )
